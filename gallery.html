@@ -600,3 +600,262 @@
   </script>
 </body>
 </html>
+x pie slice on plate" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1570988163339-cb3a97e76d6f?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Lemon Icebox Pie</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="plates">
+          <span class="badge">Plates</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop" alt="Grilled salmon filet with squash" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Grilled Salmon</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="grill">
+          <span class="badge">The Grill</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1441205188609-b875e96b1a44?q=80&w=1600&auto=format&fit=crop" alt="Wood-grilled corn and asparagus" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1441205188609-b875e96b1a44?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Veg Over Fire</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="community">
+          <span class="badge">Community</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1600&auto=format&fit=crop" alt="Historic Jackson Square photo" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Jackson Square 1950s</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX DIALOG ===== -->
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="lb-wrap">
+      <div class="lb-controls">
+        <button class="lb-btn lb-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lb-btn lb-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <button class="lb-btn lb-close" aria-label="Close viewer"><i class="fa-solid fa-xmark"></i></button>
+      <div class="lb-media"><img alt=""></div>
+      <div class="lb-caption"><strong class="lb-cap"></strong><span class="lb-index"></span></div>
+    </div>
+  </dialog>
+
+  <!-- ===== FOOTER ===== -->
+  <footer aria-label="Footer">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="brand-footer">Green's</span>
+          <div class="tag">Soulful. Southern. Comfort.</div>
+          <p style="max-width:40ch;margin:.8rem 0 0;">Serving Oak Ridge since 2010 — homestyle plates, fresh-baked pies, and friendly faces every day.</p>
+          <div class="socials" aria-label="Social Links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="TripAdvisor"><i class="fa-brands fa-tripadvisor"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Visit Us</h4>
+          <ul>
+            <li>123 Market Street</li>
+            <li>Oak Ridge, TN 37830</li>
+            <li><a href="https://maps.google.com" target="_blank" rel="noopener">Get Directions</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Hours</h4>
+          <ul>
+            <li>Mon – Fri  11 a – 8 p</li>
+            <li>Saturday  10 a – 8 p</li>
+            <li>Sunday  Closed</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:18655551234">(865) 555-1234</a></li>
+            <li><a href="mailto:hello@greensrestaurant.com">hello@greensrestaurant.com</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Quick Links</h4>
+          <ul>
+            <li><a href="/#main-menu">Menu</a></li>
+            <li><a href="/#bakery">Bakery</a></li>
+            <li><a href="/#chalk-wall">Specials</a></li>
+            <li><a href="/our-story.html#community">Our Story</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom">
+        <div>© 2025 Green's Restaurant & Bakery · All Rights Reserved</div>
+        <div>Website by HC Web Labs</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      'use strict';
+
+      const header = document.querySelector('header');
+      const burger = document.getElementById('hamburger');
+      const panel  = document.getElementById('mobile-panel');
+
+      // Sticky header + basic scroll handlers
+      function onScroll(){
+        if (window.scrollY > 8) header.classList.add('is-stuck'); else header.classList.remove('is-stuck');
+        handleScrollAnimations();
+      }
+      onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+
+      // Mobile nav
+      if (burger && panel) {
+        burger.addEventListener('click', ()=>{
+          const isOpen = panel.classList.toggle('open');
+          burger.setAttribute('aria-expanded', isOpen);
+          panel.setAttribute('aria-hidden', !isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        panel.addEventListener('click', (e)=>{
+          const link = e.target.closest('a');
+          if (link){
+            panel.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            panel.setAttribute('aria-hidden','true');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Smooth scroll for hash links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+          const href = a.getAttribute('href');
+          if (!href || href==='#') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior:'smooth' });
+          history.pushState(null,null,href);
+          if (panel && panel.classList.contains('open')) {
+            panel.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            panel.setAttribute('aria-hidden','true');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      // Scroll animations
+      function handleScrollAnimations(){
+        document.querySelectorAll('.fade-in-up').forEach((el)=>{
+          const r = el.getBoundingClientRect();
+          const visible = (r.top < innerHeight - 100) && (r.bottom > 0);
+          if (visible) el.classList.add('visible');
+        });
+      }
+      function addStagger(){
+        const groups = ['#grid .card'];
+        groups.forEach(sel=>{
+          document.querySelectorAll(sel).forEach((el, i)=>{
+            el.style.transitionDelay = (i * 0.06) + 's';
+            el.classList.add('fade-in-up');
+          });
+        });
+      }
+
+      // Filters
+      const chips = document.querySelectorAll('.chiprow .chip');
+      const cards = Array.from(document.querySelectorAll('#grid .card'));
+      function setFilter(tag){
+        cards.forEach(card=>{
+          const tags = card.getAttribute('data-tags') || '';
+          const show = (tag==='all') || tags.split(',').map(s=>s.trim()).includes(tag);
+          card.style.display = show ? '' : 'none';
+        });
+      }
+      chips.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          chips.forEach(c=>c.setAttribute('aria-pressed','false'));
+          btn.setAttribute('aria-pressed','true');
+          setFilter(btn.dataset.filter);
+        });
+      });
+
+      // Lightbox (dialog)
+      const dialog = document.getElementById('lightbox');
+      const lbImg  = dialog.querySelector('.lb-media img');
+      const lbCap  = dialog.querySelector('.lb-cap');
+      const lbIdx  = dialog.querySelector('.lb-index');
+      const btnPrev= dialog.querySelector('.lb-prev');
+      const btnNext= dialog.querySelector('.lb-next');
+      const btnClose=dialog.querySelector('.lb-close');
+
+      const items = cards.map(card=>{
+        const img = card.querySelector('img');
+        return {
+          full: img.getAttribute('data-full') || img.src,
+          alt: img.alt || '',
+          cap: card.querySelector('.cap')?.textContent.trim() || '',
+          node: card
+        };
+      });
+      let current = 0;
+
+      function openAt(index){
+        current = (index+items.length)%items.length;
+        const it = items[current];
+        lbImg.src = it.full; lbImg.alt = it.alt;
+        lbCap.textContent = it.cap;
+        lbIdx.textContent = `${current+1} / ${items.length}`;
+        if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open','');
+        lbImg.focus({preventScroll:true});
+      }
+      function closeLB(){ if (dialog.open) dialog.close(); }
+      function next(){ openAt(current+1); }
+      function prev(){ openAt(current-1); }
+
+      document.querySelectorAll('.open-lb, #grid .media img').forEach((el)=>{
+        el.addEventListener('click', ()=>{
+          const card = el.closest('.card');
+          const index = cards.indexOf(card);
+          openAt(index);
+        });
+      });
+      btnClose.addEventListener('click', closeLB);
+      btnNext.addEventListener('click', next);
+      btnPrev.addEventListener('click', prev);
+      dialog.addEventListener('click', (e)=>{ if (e.target === dialog) closeLB(); });
+      dialog.addEventListener('keydown', (e)=>{
+        if (e.key==='Escape') closeLB();
+        else if (e.key==='ArrowRight') next();
+        else if (e.key==='ArrowLeft') prev();
+      });
+
+      // Init
+      function init(){
+        addStagger();
+        handleScrollAnimations();
+        setTimeout(()=>document.body.classList.add('loaded'), 80);
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+</body>
+</html>
