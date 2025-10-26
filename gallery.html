@@ -1,1 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Green's Restaurant & Bakery — Photo gallery: Southern plates, fresh-baked pies, our wood-fired grill, and community moments in Oak Ridge, TN.">
+  <title>Gallery | Green's Restaurant & Bakery</title>
 
+  <!-- Fonts / Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- LCP image preload (hero) -->
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop"
+    imagesrcset="
+      https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=2400&auto=format&fit=crop 2400w,
+      https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1800&auto=format&fit=crop 1800w,
+      https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1200&auto=format&fit=crop 1200w"
+    imagesizes="(max-width: 900px) 100vw, 50vw">
+
+  <style>
+    /* ============ GLOBAL TOKENS (match Home) ============ */
+    *, *::before, *::after { box-sizing: border-box; }
+    :root{
+      --cream:#FAF7F1; --paper:#FFFFFF; --black:#1B1B1B; --amber:#C7963B; --denim:#3E4752; --gray:#EAE7E1;
+      --success:#4a7c59; --radius:18px; --radius-sm:14px;
+      --shadow-sm:0 10px 30px rgba(0,0,0,.08); --shadow:0 15px 40px rgba(0,0,0,.08); --shadow-lg:0 20px 60px rgba(0,0,0,.12);
+      --wood:url('https://i.imgur.com/YqMSAE2.jpg'); --slate:url('https://i.imgur.com/qdrhsdk.jpg'); --chalk:#f8f6f0; --frame:#5b3a24;
+    }
+    body{
+      margin:0; font-family:'Source Sans 3',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--black); background:var(--cream); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      overflow-x:hidden;
+    }
+    body.loaded { animation:fadeIn .4s ease-out; }
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none;padding:0;margin:0}
+    img{max-width:100%;height:auto;display:block}
+    .wrap{width:min(100%,1100px);margin-inline:auto;padding:0 16px}
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,1px,1px);white-space:nowrap;border:0}
+
+    /* ============ SCROLL ANIMATIONS (match Home) ============ */
+    .fade-in-up{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+    .fade-in-up.visible{opacity:1;transform:translateY(0)}
+
+    /* ============ HEADER / NAV (no dropdowns) ============ */
+    header{
+      position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--gray);
+      box-shadow:none;transition:box-shadow .3s ease, backdrop-filter .3s ease; backdrop-filter:blur(0px);
+    }
+    header.is-stuck{box-shadow:0 6px 18px rgba(0,0,0,.1); backdrop-filter:blur(10px); background:rgba(255,255,255,0.95);}
+    .bar{display:flex;align-items:center;gap:12px;padding:12px 0}
+    nav{margin-left:auto;font-weight:700}
+    .brand{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;line-height:1;transition:transform .2s ease}
+    .brand:hover{transform:scale(1.02)}
+    .brand__line1{display:flex;align-items:flex-end;gap:.3rem}
+    .brand__script,.brand__restaurant{font-family:'Charm',cursive;font-weight:700;font-size:1.65rem;line-height:1;letter-spacing:-.005em}
+    .brand__line2{font-weight:800;text-transform:uppercase;color:var(--denim);letter-spacing:.24em;font-size:.88rem;line-height:1;margin-top:1px}
+    @media(min-width:1100px){.brand__script,.brand__restaurant{font-size:1.9rem}.brand__line2{font-size:1rem;letter-spacing:.26em}}
+    .menu{display:none;flex-direction:column;gap:6px;padding:12px 0;white-space:nowrap}
+    .menu>li>a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px}
+    .menu>li>a:hover{background:rgba(199,150,59,0.05)}
+    .menu .label{display:inline-block;padding:0 0 2px;background-image:linear-gradient(var(--amber),var(--amber));background-size:0% 2px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s ease-out}
+    .menu>li>a:hover .label,.menu>li>a[aria-current="page"] .label{background-size:100% 2px}
+    @media(min-width:900px){.menu{display:flex;flex-direction:row;align-items:center;gap:22px;padding:0}.menu>li{position:relative}.menu>li>a{padding:8px 6px;border-radius:0}}
+    .hamburger{
+      display:inline-flex;flex-direction:column;gap:4px;width:36px;height:32px;align-items:center;justify-content:center;
+      border:1px solid var(--gray);border-radius:10px;background:#fff;cursor:pointer;margin-left:12px;transition:border-color .2s ease;
+    }
+    .hamburger:hover{border-color:var(--amber)}
+    .hamburger span{width:18px;height:2px;background:var(--black);display:block}
+    @media(min-width:900px){.hamburger{display:none}}
+    .navpanel{display:block;border-top:1px solid var(--gray);background:#fff;overflow:hidden;max-height:0;transition:max-height .3s ease}
+    .navpanel.open{max-height:70vh}
+    .navpanel .menu{display:block;padding:8px 0}
+    .navpanel .menu>li{padding:2px 0}
+    a:focus,button:focus{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px}
+
+    /* ============ HERO (match feel) ============ */
+    #hero{background:var(--cream);position:relative;overflow:hidden}
+    #hero .wrap-hero{
+      width:min(95%,1100px);margin-inline:auto;padding:clamp(2.5rem,6vw,5rem) 16px 2.2rem;display:grid;gap:2rem;align-items:center;
+    }
+    @media(min-width:900px){#hero .wrap-hero{grid-template-columns:1.1fr .9fr;gap:3rem}}
+    #hero .tagline{font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);font-weight:800;margin-bottom:.6rem;animation:slideInLeft .6s ease-out}
+    #hero h2{font-family:'Charm',cursive;font-size:clamp(2.6rem,6vw,4rem);line-height:1.05;margin:0;animation:slideInLeft .6s ease-out .1s both}
+    #hero p{font-size:1.125rem;color:#2a2a2a;margin:1rem 0 1.6rem;max-width:55ch;animation:slideInLeft .6s ease-out .2s both}
+    #hero .buttons{display:flex;flex-wrap:wrap;gap:1rem;animation:slideInLeft .6s ease-out .3s both}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+    .btn{display:inline-flex;align-items:center;gap:.55rem;font-weight:700;padding:.9rem 1.6rem;border-radius:999px;text-decoration:none;box-shadow:var(--shadow);transition:transform .2s,box-shadow .3s,border-color .2s,color .2s;position:relative;overflow:hidden}
+    .btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,.3);transform:translate(-50%,-50%);transition:width .6s ease,height .6s ease}
+    .btn:active::before{width:300px;height:300px}
+    .btn.primary{background:var(--amber);color:#fff;border:1px solid transparent}
+    .btn.primary:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(199,150,59,.4)}
+    .btn.alt{background:#fff;color:var(--black);border:1px solid var(--gray)}
+    .btn.alt:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+    #hero .hero-image{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--paper);border:1px solid var(--gray);aspect-ratio:16/9;min-height:260px;isolation:isolate;animation:slideInRight .8s ease-out .2s both;transition:transform .3s ease}
+    #hero .hero-image:hover{transform:scale(1.02)}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+    #hero .hero-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom right, rgba(62,71,82,.08), rgba(199,150,59,.06));mix-blend-mode:multiply}
+    .checker{width:100%;height:12px;margin-top:2rem;background:repeating-linear-gradient(90deg, rgba(62,71,82,.25) 0 16px, transparent 16px 32px), repeating-linear-gradient(0deg, rgba(62,71,82,.10) 0 16px, transparent 16px 32px);opacity:.12}
+
+    /* ============ FILTER BAR ============ */
+    #filters{background:var(--cream);padding:1rem 0 0}
+    .chiprow{display:flex;flex-wrap:wrap;gap:.5rem}
+    .chip{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .85rem;border-radius:999px;border:1px solid var(--gray);background:#fff;font-weight:800;cursor:pointer;transition:transform .15s ease, border-color .2s ease,color .2s ease}
+    .chip:hover{transform:translateY(-2px);border-color:var(--amber);color:var(--amber)}
+    .chip[aria-pressed="true"]{background:#fff8ea;border-color:#efd39c;color:#5a3d00}
+
+    /* ============ GALLERY GRID ============ */
+    #gallery-grid{padding:1.2rem 0 3rem}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:600px){.grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:900px){.grid{grid-template-columns:1fr 1fr 1fr}}
+    .card{
+      position:relative;background:#fff;border:1px solid var(--gray);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);
+      transition:transform .25s ease, box-shadow .3s ease;
+    }
+    .card:hover{transform:translateY(-6px) rotate(-0.5deg);box-shadow:var(--shadow-lg)}
+    .card .media{aspect-ratio:4/3;background:#eee;overflow:hidden}
+    .card .media img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+    .card:hover .media img{transform:scale(1.06)}
+    .card .meta{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 12px}
+    .meta .cap{font-weight:700;color:var(--denim);letter-spacing:.02em}
+    .meta .btn-mini{display:inline-flex;align-items:center;gap:.4rem;font-weight:800}
+    .badge{position:absolute;top:12px;left:12px;z-index:2;background:rgba(250,247,241,.95);border:1px solid var(--gray);color:var(--denim);font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;padding:.32rem .6rem;border-radius:999px;backdrop-filter:blur(4px)}
+
+    /* ============ LIGHTBOX (dialog) ============ */
+    dialog#lightbox{
+      width:min(96vw, 1100px);max-width:1100px;border:none;border-radius:14px;padding:0;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35);background:#000;
+    }
+    dialog::backdrop{background:rgba(0,0,0,.6);backdrop-filter:blur(3px)}
+    .lb-wrap{position:relative;background:#000}
+    .lb-media{aspect-ratio:16/10;background:#000}
+    .lb-media img{width:100%;height:100%;object-fit:contain;background:#000}
+    .lb-caption{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:.75rem 1rem;background:linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.0))}
+    .lb-controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;pointer-events:none}
+    .lb-btn{
+      pointer-events:auto;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(6px);cursor:pointer;transition:transform .2s ease, background .2s ease;
+    }
+    .lb-btn:hover{transform:scale(1.06);background:rgba(255,255,255,.14)}
+    .lb-close{position:absolute;top:10px;right:10px}
+
+    /* ============ FOOTER (match Home) ============ */
+    footer{background:var(--cream);border-top:1px solid var(--gray);padding:3rem 0 1.5rem;color:var(--denim)}
+    footer .grid{display:grid;gap:2rem;grid-template-columns:1fr}
+    @media(min-width:760px){footer .grid{grid-template-columns:1.2fr 1fr 1fr}}
+    footer h4{font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:.95rem;margin:0 0 .85rem;color:var(--denim)}
+    footer ul{list-style:none;margin:0;padding:0}
+    footer li{margin:.4rem 0}
+    footer a{color:inherit;text-decoration:none;font-weight:600;transition:color .2s ease, transform .2s ease;display:inline-block}
+    footer a:hover{color:var(--amber);transform:translateX(3px)}
+    .brand-footer{font-family:'Charm',cursive;font-weight:700;font-size:1.8rem;margin-bottom:.3rem;display:block;color:var(--denim)}
+    .tag{font-weight:700;letter-spacing:.08em;color:var(--amber);font-size:.95rem}
+    .socials{display:flex;gap:.7rem;margin-top:.85rem}
+    .socials a{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray);border-radius:50%;background:#fff;transition:all .25s ease;transform:translateX(0)}
+    .socials a:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-3px);box-shadow:0 4px 12px rgba(199,150,59,.3)}
+    .bottom{border-top:1px solid var(--gray);margin-top:2.5rem;padding-top:1.25rem;font-size:.85rem;color:#555;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+
+    /* ============ MOBILE TWEAKS ============ */
+    @media(max-width:768px){
+      #hero h2{font-size:clamp(2.2rem,8vw,3rem)}
+      #hero p{font-size:1rem}
+      .btn{width:100%;justify-content:center}
+      #hero .buttons{flex-direction:column;width:100%}
+      .menu>li>a,.btn{min-height:44px}
+    }
+
+    /* ============ ACCESSIBILITY ============ */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+      .card{transform:none!important}
+    }
+    :focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+    @media(prefers-contrast:high){
+      .btn{border:2px solid currentColor}
+      .card{border:2px solid var(--black)}
+    }
+  </style>
+
+  <!-- JSON-LD: CollectionPage for an ImageGallery -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Green's Restaurant & Bakery — Gallery",
+    "about":"Southern plates, bakery, wood-fired grill, and community photos.",
+    "isPartOf":{"@type":"WebSite","name":"Green's Restaurant & Bakery"},
+    "primaryImageOfPage":"https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop"
+  }
+  </script>
+</head>
+<body id="gallery">
+
+  <!-- ===== HEADER (no dropdowns; Gallery current) ===== -->
+  <header role="banner">
+    <div class="wrap bar">
+      <a class="brand" href="/#home" aria-label="Green's Restaurant & Bakery">
+        <span class="brand__line1"><span class="brand__script">Green's</span><span class="brand__restaurant">Restaurant</span></span>
+        <span class="brand__line2">&amp; Bakery</span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="menu" id="menu-desktop">
+          <li><a href="/#home"><span class="label">Home</span></a></li>
+          <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
+          <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="/gallery.html" aria-current="page"><span class="label">Gallery</span></a></li>
+          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobile-panel" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div id="mobile-panel" class="navpanel" aria-hidden="true">
+      <div class="wrap">
+        <ul class="menu" id="menu-mobile">
+          <li><a href="/#home"><span class="label">Home</span></a></li>
+          <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
+          <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" aria-label="Gallery intro">
+    <div class="wrap-hero">
+      <div>
+        <div class="tagline">Soulful. Southern. Comfort.</div>
+        <h2>Moments from our kitchen.</h2>
+        <p>Plates hot off the grill, fresh-baked slices, and snapshots from our Oak Ridge community — a peek at the flavors and faces that make Green’s feel like home.</p>
+        <div class="buttons">
+          <a href="/#menu-teaser" class="btn primary"><i class="fa-solid fa-utensils"></i> View Menu</a>
+          <a href="/#hours" class="btn alt"><i class="fa-solid fa-location-dot"></i> Visit Us</a>
+        </div>
+      </div>
+      <div class="hero-image" aria-hidden="true">
+        <picture>
+          <source
+            srcset="
+              https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=2000&auto=format&fit=crop 2000w,
+              https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop 1600w,
+              https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1200&auto=format&fit=crop 1200w"
+            media="(min-width: 900px)">
+          <img
+            src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1400&auto=format&fit=crop"
+            alt=""
+            width="1600" height="900" decoding="async" loading="eager" fetchpriority="high"
+            sizes="(max-width: 900px) 100vw, 50vw">
+        </picture>
+      </div>
+    </div>
+    <div class="checker" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== FILTERS ===== -->
+  <section id="filters" aria-label="Filter gallery tags">
+    <div class="wrap">
+      <div class="chiprow" role="group" aria-label="Filter gallery">
+        <button class="chip" data-filter="all" aria-pressed="true"><i class="fa-solid fa-layer-group"></i> All</button>
+        <button class="chip" data-filter="plates"><i class="fa-solid fa-burger"></i> Plates</button>
+        <button class="chip" data-filter="sides"><i class="fa-solid fa-carrot"></i> Sides</button>
+        <button class="chip" data-filter="bakery"><i class="fa-solid fa-cake-candles"></i> Bakery</button>
+        <button class="chip" data-filter="grill"><i class="fa-solid fa-fire-burner"></i> The Grill</button>
+        <button class="chip" data-filter="community"><i class="fa-solid fa-people-group"></i> Community</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY GRID ===== -->
+  <section id="gallery-grid" aria-label="Photo gallery">
+    <div class="wrap">
+      <div class="grid" id="grid">
+        <!-- Card template (repeat) -->
+        <figure class="card fade-in-up" data-tags="plates">
+          <span class="badge">Plates</span>
+          <div class="media">
+            <img src="https://i.imgur.com/JipFYnO.jpg" alt="Crispy chicken fried steak with sides" loading="lazy" decoding="async" data-full="https://i.imgur.com/JipFYnO.jpg">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Chicken Fried Steak</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="sides">
+          <span class="badge">Sides</span>
+          <div class="media">
+            <img src="https://i.imgur.com/E2ylUmz.jpg" alt="Green beans, mashed potatoes and cornbread" loading="lazy" decoding="async" data-full="https://i.imgur.com/E2ylUmz.jpg">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Famous Green Beans</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="bakery">
+          <span class="badge">Bakery</span>
+          <div class="media">
+            <img src="https://i.imgur.com/TJLNqaO.jpg" alt="Chocolate layer cake slice with frosting" loading="lazy" decoding="async" data-full="https://i.imgur.com/TJLNqaO.jpg">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Chocolate Layer Cake</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="grill">
+          <span class="badge">The Grill</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1514511547117-f9c3c1ba36f2?q=80&w=1600&auto=format&fit=crop" alt="Hardwood grill with glowing coals" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1514511547117-f9c3c1ba36f2?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Hardwood Heat</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="community">
+          <span class="badge">Community</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=1600&auto=format&fit=crop" alt="Community fundraiser with friendly dog" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Fundraiser Fun</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="bakery">
+          <span class="badge">Bakery</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1570988163339-cb3a97e76d6f?q=80&w=1600&auto=format&fit=crop" alt="Lemon icebox pie slice on plate" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1570988163339-cb3a97e76d6f?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Lemon Icebox Pie</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="plates">
+          <span class="badge">Plates</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop" alt="Grilled salmon filet with squash" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Grilled Salmon</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="grill">
+          <span class="badge">The Grill</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1441205188609-b875e96b1a44?q=80&w=1600&auto=format&fit=crop" alt="Wood-grilled corn and asparagus" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1441205188609-b875e96b1a44?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Veg Over Fire</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+
+        <figure class="card fade-in-up" data-tags="community">
+          <span class="badge">Community</span>
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1600&auto=format&fit=crop" alt="Historic Jackson Square photo" loading="lazy" decoding="async" data-full="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2400&auto=format&fit=crop">
+          </div>
+          <figcaption class="meta">
+            <div class="cap">Jackson Square 1950s</div>
+            <button class="btn-mini btn alt open-lb"><i class="fa-solid fa-magnifying-glass-plus"></i> View</button>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX DIALOG ===== -->
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="lb-wrap">
+      <div class="lb-controls">
+        <button class="lb-btn lb-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lb-btn lb-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <button class="lb-btn lb-close" aria-label="Close viewer"><i class="fa-solid fa-xmark"></i></button>
+      <div class="lb-media"><img alt=""></div>
+      <div class="lb-caption"><strong class="lb-cap"></strong><span class="lb-index"></span></div>
+    </div>
+  </dialog>
+
+  <!-- ===== FOOTER ===== -->
+  <footer aria-label="Footer">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <span class="brand-footer">Green's</span>
+          <div class="tag">Soulful. Southern. Comfort.</div>
+          <p style="max-width:40ch;margin:.8rem 0 0;">Serving Oak Ridge since 2010 — homestyle plates, fresh-baked pies, and friendly faces every day.</p>
+          <div class="socials" aria-label="Social Links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="TripAdvisor"><i class="fa-brands fa-tripadvisor"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4>Visit Us</h4>
+          <ul>
+            <li>123 Market Street</li>
+            <li>Oak Ridge, TN 37830</li>
+            <li><a href="https://maps.google.com" target="_blank" rel="noopener">Get Directions</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Hours</h4>
+          <ul>
+            <li>Mon – Fri  11 a – 8 p</li>
+            <li>Saturday  10 a – 8 p</li>
+            <li>Sunday  Closed</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:18655551234">(865) 555-1234</a></li>
+            <li><a href="mailto:hello@greensrestaurant.com">hello@greensrestaurant.com</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Quick Links</h4>
+          <ul>
+            <li><a href="/#main-menu">Menu</a></li>
+            <li><a href="/#bakery">Bakery</a></li>
+            <li><a href="/#chalk-wall">Specials</a></li>
+            <li><a href="/our-story.html#community">Our Story</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom">
+        <div>© 2025 Green's Restaurant & Bakery · All Rights Reserved</div>
+        <div>Website by HC Web Labs</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      'use strict';
+
+      const header = document.querySelector('header');
+      const burger = document.getElementById('hamburger');
+      const panel  = document.getElementById('mobile-panel');
+
+      // Sticky header + basic scroll handlers
+      function onScroll(){
+        if (window.scrollY > 8) header.classList.add('is-stuck'); else header.classList.remove('is-stuck');
+        handleScrollAnimations();
+      }
+      onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+
+      // Mobile nav
+      if (burger && panel) {
+        burger.addEventListener('click', ()=>{
+          const isOpen = panel.classList.toggle('open');
+          burger.setAttribute('aria-expanded', isOpen);
+          panel.setAttribute('aria-hidden', !isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        panel.addEventListener('click', (e)=>{
+          const link = e.target.closest('a');
+          if (link){
+            panel.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            panel.setAttribute('aria-hidden','true');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Smooth scroll for hash links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+          const href = a.getAttribute('href');
+          if (!href || href==='#') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior:'smooth' });
+          history.pushState(null,null,href);
+          if (panel && panel.classList.contains('open')) {
+            panel.classList.remove('open');
+            burger.setAttribute('aria-expanded','false');
+            panel.setAttribute('aria-hidden','true');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      // Scroll animations
+      function handleScrollAnimations(){
+        document.querySelectorAll('.fade-in-up').forEach((el)=>{
+          const r = el.getBoundingClientRect();
+          const visible = (r.top < innerHeight - 100) && (r.bottom > 0);
+          if (visible) el.classList.add('visible');
+        });
+      }
+      function addStagger(){
+        const groups = ['#grid .card'];
+        groups.forEach(sel=>{
+          document.querySelectorAll(sel).forEach((el, i)=>{
+            el.style.transitionDelay = (i * 0.06) + 's';
+            el.classList.add('fade-in-up');
+          });
+        });
+      }
+
+      // Filters
+      const chips = document.querySelectorAll('.chiprow .chip');
+      const cards = Array.from(document.querySelectorAll('#grid .card'));
+      function setFilter(tag){
+        cards.forEach(card=>{
+          const tags = card.getAttribute('data-tags') || '';
+          const show = (tag==='all') || tags.split(',').map(s=>s.trim()).includes(tag);
+          card.style.display = show ? '' : 'none';
+        });
+      }
+      chips.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          chips.forEach(c=>c.setAttribute('aria-pressed','false'));
+          btn.setAttribute('aria-pressed','true');
+          setFilter(btn.dataset.filter);
+        });
+      });
+
+      // Lightbox (dialog)
+      const dialog = document.getElementById('lightbox');
+      const lbImg  = dialog.querySelector('.lb-media img');
+      const lbCap  = dialog.querySelector('.lb-cap');
+      const lbIdx  = dialog.querySelector('.lb-index');
+      const btnPrev= dialog.querySelector('.lb-prev');
+      const btnNext= dialog.querySelector('.lb-next');
+      const btnClose=dialog.querySelector('.lb-close');
+
+      const items = cards.map(card=>{
+        const img = card.querySelector('img');
+        return {
+          full: img.getAttribute('data-full') || img.src,
+          alt: img.alt || '',
+          cap: card.querySelector('.cap')?.textContent.trim() || '',
+          node: card
+        };
+      });
+      let current = 0;
+
+      function openAt(index){
+        current = (index+items.length)%items.length;
+        const it = items[current];
+        lbImg.src = it.full; lbImg.alt = it.alt;
+        lbCap.textContent = it.cap;
+        lbIdx.textContent = `${current+1} / ${items.length}`;
+        if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open','');
+        lbImg.focus({preventScroll:true});
+      }
+      function closeLB(){ if (dialog.open) dialog.close(); }
+      function next(){ openAt(current+1); }
+      function prev(){ openAt(current-1); }
+
+      document.querySelectorAll('.open-lb, #grid .media img').forEach((el)=>{
+        el.addEventListener('click', ()=>{
+          const card = el.closest('.card');
+          const index = cards.indexOf(card);
+          openAt(index);
+        });
+      });
+      btnClose.addEventListener('click', closeLB);
+      btnNext.addEventListener('click', next);
+      btnPrev.addEventListener('click', prev);
+      dialog.addEventListener('click', (e)=>{ if (e.target === dialog) closeLB(); });
+      dialog.addEventListener('keydown', (e)=>{
+        if (e.key==='Escape') closeLB();
+        else if (e.key==='ArrowRight') next();
+        else if (e.key==='ArrowLeft') prev();
+      });
+
+      // Init
+      function init(){
+        addStagger();
+        handleScrollAnimations();
+        setTimeout(()=>document.body.classList.add('loaded'), 80);
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+  </script>
+</body>
+</html>
