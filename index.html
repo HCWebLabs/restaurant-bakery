@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Green's Restaurant & Bakery - Soulful Southern comfort food in Oak Ridge, TN. Fresh-baked pies, daily specials, and homestyle cooking since 2010.">
+  <title>Green's Restaurant & Bakery | Southern Comfort Food in Oak Ridge, TN</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Hero image preload (LCP boost) -->
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=80"
+    imagesrcset="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=2000&q=80 2000w,
+                 https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80 1600w,
+                 https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80 1200w"
+    imagesizes="(max-width: 900px) 100vw, 50vw">
+
+  <style>
+    /* ============ GLOBAL TOKENS ============ */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --cream: #FAF7F1;
+      --paper: #FFFFFF;
+      --black: #1B1B1B;
+      --amber: #C7963B;
+      --denim: #3E4752;
+      --gray: #EAE7E1;
+      --success: #4a7c59;
+      --radius: 18px;
+      --radius-sm: 14px;
+      --shadow-sm: 0 10px 30px rgba(0,0,0,.08);
+      --shadow: 0 15px 40px rgba(0,0,0,.08);
+      --shadow-lg: 0 20px 60px rgba(0,0,0,.12);
+      --wood: url('https://i.imgur.com/YqMSAE2.jpg');
+      --slate: url('https://i.imgur.com/qdrhsdk.jpg');
+      --chalk: #f8f6f0;
+      --frame: #5b3a24;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Source Sans 3', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--black);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    body.loaded { animation: fadeIn 0.4s ease-out; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    .wrap { width: min(100%, 1100px); margin-inline: auto; padding: 0 16px; }
+
+    /* ============ SCROLL ANIMATIONS ============ */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============ HEADER / NAV ============ */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 1px solid var(--gray);
+      box-shadow: none;
+      transition: box-shadow .3s ease, backdrop-filter .3s ease;
+      backdrop-filter: blur(0px);
+    }
+    header.is-stuck { box-shadow: 0 6px 18px rgba(0,0,0,.1); backdrop-filter: blur(10px); background: rgba(255,255,255,0.95); }
+
+    .bar { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+
+    nav { margin-left: auto; font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: .01em; line-height: 1.1; }
+
+    .brand { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; line-height: 1; transition: transform 0.2s ease; }
+    .brand:hover { transform: scale(1.02); }
+
+    .brand__line1 { display: flex; align-items: flex-end; gap: .3rem; }
+    .brand__script, .brand__restaurant { font-family: 'Charm', cursive; font-weight: 700; font-size: 1.65rem; line-height: 1; letter-spacing: -.005em; }
+    .brand__line2 { font-weight: 800; text-transform: uppercase; color: var(--denim); letter-spacing: .24em; font-size: .88rem; line-height: 1; margin-top: 1px; }
+    @media (min-width: 1100px) {
+      .brand__script, .brand__restaurant { font-size: 1.9rem; }
+      .brand__line2 { font-size: 1rem; letter-spacing: .26em; }
+    }
+
+    .menu { display: none; flex-direction: column; gap: 6px; padding: 12px 0; white-space: nowrap; }
+    .menu > li > a, .menu > li > button {
+      display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px;
+      background: transparent; border: 0; cursor: pointer; font: inherit; line-height: 1.1; color: var(--black);
+      position: relative; transition: background 0.2s ease;
+    }
+    .menu > li > a:hover, .menu > li > button:hover { background: rgba(199,150,59,0.05); }
+
+    .menu .label {
+      display: inline-block; padding: 0 0 2px;
+      background-image: linear-gradient(var(--amber), var(--amber));
+      background-size: 0% 2px; background-repeat: no-repeat; background-position: 0 100%;
+      transition: background-size .25s ease-out;
+    }
+    .menu > li > a:hover .label,
+    .menu > li > button:hover .label,
+    .menu > li > a[aria-current="page"] .label { background-size: 100% 2px; }
+
+    .menu > li > .has-dd i { color: var(--denim); font-size: .95em; line-height: 1; transition: transform .25s ease; }
+    .menu > li.open > .has-dd i { transform: rotate(180deg); }
+
+    @media (min-width: 900px) {
+      .menu { display: flex; flex-direction: row; align-items: center; gap: 22px; padding: 0; }
+      .menu > li > a, .menu > li > button { padding: 8px 6px; border-radius: 0; }
+      .menu > li { position: relative; }
+    }
+
+    .dropdown {
+      background: #fff; border: 1px solid var(--gray); border-radius: var(--radius-sm); box-shadow: var(--shadow);
+      padding: 10px; margin-top: 6px; min-width: 220px; display: none; opacity: 0; transform: translateY(12px);
+      transition: opacity .25s ease-out, transform .25s ease-out;
+    }
+    .dropdown a {
+      display: block; padding: 10px 12px; border-radius: 8px; font-weight: 600; font-size: .95rem;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    }
+    .dropdown a:hover { background: var(--cream); color: var(--amber); transform: translateX(4px); }
+    .menu > li.open > .dropdown { display: block; opacity: 1; transform: translateY(0); }
+    @media (min-width: 900px) { .menu > li.open > .dropdown { position: absolute; left: 0; top: 100%; } }
+
+    .hamburger {
+      display: inline-flex; flex-direction: column; gap: 4px; width: 36px; height: 32px; align-items: center; justify-content: center;
+      border: 1px solid var(--gray); border-radius: 10px; background: #fff; cursor: pointer; margin-left: 12px; transition: border-color 0.2s ease;
+    }
+    .hamburger:hover { border-color: var(--amber); }
+    .hamburger span { width: 18px; height: 2px; background: var(--black); display: block; transition: transform 0.2s ease, opacity 0.2s ease; }
+    @media (min-width: 900px) { .hamburger { display: none; } }
+
+    .navpanel { display: block; border-top: 1px solid var(--gray); background: #fff; overflow: hidden; max-height: 0; transition: max-height .3s ease; }
+    .navpanel.open { max-height: 70vh; }
+    .navpanel .menu { display: block; padding: 8px 0; }
+    .navpanel .menu > li { padding: 2px 0; }
+
+    a:focus, button:focus { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 6px; }
+
+    /* ============ HERO ============ */
+    #hero { background: var(--cream); position: relative; overflow: hidden; }
+    #hero .wrap-hero {
+      width: min(95%, 1100px); margin-inline: auto; padding: clamp(2.5rem, 6vw, 5rem) 16px 3rem;
+      display: grid; gap: 2rem; align-items: center;
+    }
+    @media (min-width: 900px) { #hero .wrap-hero { grid-template-columns: 1.1fr .9fr; gap: 3rem; } }
+
+    #hero .tagline {
+      font-size: .9rem; letter-spacing: .15em; text-transform: uppercase; color: var(--amber);
+      font-weight: 800; margin-bottom: .6rem; animation: slideInLeft 0.6s ease-out;
+    }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+    #hero h2 { font-family: 'Charm', cursive; font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1.05; margin: 0; animation: slideInLeft 0.6s ease-out 0.1s both; }
+
+    #hero p { font-size: 1.125rem; color: #2a2a2a; margin: 1rem 0 1.75rem; max-width: 45ch; line-height: 1.6; animation: slideInLeft 0.6s ease-out 0.2s both; }
+
+    #hero .buttons { display: flex; flex-wrap: wrap; gap: 1rem; animation: slideInLeft 0.6s ease-out 0.3s both; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; padding: .9rem 1.6rem; border-radius: 999px;
+      text-decoration: none; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .3s ease, border-color .2s ease, color .2s ease;
+      position: relative; overflow: hidden;
+    }
+    .btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255,255,255,0.3); transform: translate(-50%, -50%); transition: width 0.6s ease, height 0.6s ease; }
+    .btn:active::before { width: 300px; height: 300px; }
+    .btn.primary { background: var(--amber); color: #fff; border: 1px solid transparent; }
+    .btn.primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(199,150,59,0.4); }
+    .btn.alt { background: #fff; color: var(--black); border: 1px solid var(--gray); }
+    .btn.alt:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+    #hero .hero-image {
+      position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg);
+      background: var(--paper); border: 1px solid var(--gray); aspect-ratio: 16/9; min-height: 260px; isolation: isolate;
+      animation: slideInRight 0.8s ease-out 0.2s both; transition: transform 0.3s ease;
+    }
+    #hero .hero-image:hover { transform: scale(1.02); }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    #hero .hero-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom right, rgba(62,71,82,.08), rgba(199,150,59,.06)); mix-blend-mode: multiply; transition: opacity 0.3s ease; }
+    #hero .hero-image:hover::after { opacity: 0.7; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .checker {
+      width: 100%; height: 12px; margin-top: 2rem;
+      background: repeating-linear-gradient(90deg, rgba(62,71,82,.25) 0 16px, transparent 16px 32px),
+                  repeating-linear-gradient(0deg, rgba(62,71,82,.10) 0 16px, transparent 16px 32px);
+      opacity: .12;
+    }
+
+    /* ============ HOURS & LOCATION ============ */
+    #hours { background: var(--cream); }
+    #hours .wrap-hours { width: min(95%, 1100px); margin-inline: auto; padding: 2rem 16px 3rem; }
+
+    .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin: 0 0 1.5rem; flex-wrap: wrap; }
+    .section-heading h3 { margin: 0; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--denim); font-size: 1.1rem; }
+    .section-heading .sub { color: #333; opacity: .85; font-weight: 600; }
+
+    #hours .grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 860px) { #hours .grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .card {
+      background: var(--paper); border: 1px solid var(--gray); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.25rem; transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .card h4 { margin: .15rem 0 .75rem; font-size: 1.1rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--denim); }
+    .card .row { display: flex; gap: .7rem; align-items: flex-start; margin: .4rem 0; }
+    .card .row i { color: var(--denim); margin-top: .2rem; font-size: 1.1em; }
+    .card table { width: 100%; border-collapse: collapse; font-weight: 600; }
+    .card table td { padding: .3rem 0; }
+
+    .callout {
+      background: #fff8ea; border: 1px dashed #efd39c; color: #5a3d00; padding: .7rem .85rem; border-radius: 12px; font-weight: 700; margin-top: .8rem;
+      display: inline-flex; align-items: center; gap: .5rem; animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+
+    .map {
+      position: relative;
+      height: 220px; border-radius: 12px; border: 1px solid var(--gray); overflow: hidden;
+      background: linear-gradient(0deg, rgba(250,247,241,.8), rgba(250,247,241,.8)),
+                  url('https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      transition: transform 0.3s ease; cursor: pointer;
+    }
+    .map:hover { transform: scale(1.02); }
+    .map a { position: absolute; inset: 0; }
+
+    .btnbar { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+
+    /* ============ MENU TEASER ============ */
+    #menu-teaser { background: var(--cream); padding: 2rem 0 3rem; }
+    #menu-teaser .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+    .eyebrow { font-weight: 900; text-transform: uppercase; letter-spacing: .12em; color: var(--denim); font-size: 1.1rem; margin: 0; }
+    .sub { font-weight: 600; opacity: .9; }
+
+    .cta-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+    #menu-teaser .grid { display: grid; gap: 18px; grid-template-columns: 1fr; margin-top: .75rem; }
+    @media (min-width: 780px) { #menu-teaser .grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .menu-card {
+      position: relative; border-radius: var(--radius); overflow: hidden; background: var(--paper); border: 1px solid var(--gray); box-shadow: var(--shadow);
+      display: grid; grid-template-rows: auto; transition: transform .25s ease, box-shadow .3s ease;
+    }
+    .menu-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: var(--shadow-lg); }
+    .menu-card .media { aspect-ratio: 4/3; background: #eee; position: relative; overflow: hidden; }
+    .menu-card .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .menu-card:hover .media img { transform: scale(1.08); }
+
+    .badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2; background: rgba(250,247,241,.95); border: 1px solid var(--gray);
+      color: var(--denim); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .75rem; padding: .4rem .7rem; border-radius: 999px; backdrop-filter: blur(4px);
+    }
+
+    .menu-card .body { padding: 16px 16px 18px; }
+    .menu-card .title { font-family: 'Charm', cursive; font-weight: 700; font-size: 1.6rem; line-height: 1.1; margin: 0 0 .3rem; }
+    .menu-card .desc { margin: 0 0 .85rem; color: #2a2a2a; font-weight: 600; line-height: 1.5; }
+    .menu-card .link { display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--denim); transition: gap 0.2s ease, color 0.2s ease; }
+    .menu-card:hover .link { color: var(--amber); gap: .8rem; }
+
+    /* ============ CHALKBOARD WALL (Daily Specials) ============ */
+    #chalk-wall {
+      background: linear-gradient(0deg, rgba(250,247,241,.55), rgba(250,247,241,.55)), var(--wood) center/cover no-repeat;
+      padding: 50px 0 60px; position: relative;
+    }
+    #chalk-wall::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
+      pointer-events: none;
+    }
+    #chalk-wall .section-heading { margin-bottom: 1.5rem; }
+    #chalk-wall .section-heading h3 { color: #2e2a25; font-size: 1.15rem; }
+    #chalk-wall .section-heading .sub { color: #3a342d; }
+
+    .chalkboards { display: grid; gap: 20px; grid-template-columns: 1fr; margin-top: 10px; }
+    @media (min-width: 900px) { .chalkboards { grid-template-columns: 1fr 1fr; } }
+
+    .board {
+      position: relative; overflow: hidden; border-radius: 14px; box-shadow: var(--shadow-lg); border: 10px solid var(--frame);
+      background-clip: padding-box; display: flex; flex-direction: column; min-height: 420px; background-color: #1f1f1f; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .board:hover { transform: translateY(-6px) rotate(0.5deg); box-shadow: 0 24px 70px rgba(0,0,0,.18); }
+    @media (max-width: 899px) { .board { min-height: 380px; } }
+
+    .slate {
+      position: relative; z-index: 1; flex: 1; padding: 20px 20px 18px; border-radius: 10px;
+      background: radial-gradient(200px 130px at 20% 15%, rgba(255,255,255,.05), transparent 60%),
+                  radial-gradient(180px 120px at 80% 20%, rgba(255,255,255,.04), transparent 60%),
+                  radial-gradient(220px 180px at 50% 70%, rgba(255,255,255,.04), transparent 60%),
+                  linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,.18)), var(--slate) center/cover no-repeat;
+      color: var(--chalk);
+    }
+    .chalk-title { font-family: 'Kalam', cursive; font-weight: 700; font-size: clamp(1.7rem, 3.6vw, 2.1rem); line-height: 1.05; margin: 0 0 8px; letter-spacing: .01em; text-shadow: 0 2px 4px rgba(0,0,0,.3); }
+    .chalk-sub { font-family: 'Kalam', cursive; opacity: .9; margin: 0 0 12px; font-size: 1.05rem; }
+    .chalk-list { margin: 0; padding: 0; list-style: none; flex: 1; }
+    .chalk-list li {
+      display: flex; justify-content: space-between; gap: 14px; font-family: 'Kalam', cursive; font-size: clamp(1.05rem, 2.3vw, 1.2rem);
+      border-bottom: 1px dashed rgba(248,246,240,.18); padding: 10px 0 12px; letter-spacing: .02em; transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .board:hover .chalk-list li { border-color: rgba(248,246,240,.28); }
+    .chalk-price { font-weight: 700; white-space: nowrap; }
+    .chalk-note { margin-top: 12px; font-family: 'Kalam', cursive; font-size: 1rem; opacity: .85; font-style: italic; }
+
+    .board .badge {
+      position: absolute; top: 12px; right: 14px; background: #fff8ea; color: #5a3d00; border: 1px dashed #efd39c; border-radius: 999px;
+      font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: .32rem .6rem; font-size: .72rem; z-index: 2; left: auto;
+    }
+
+    /* ============ PHOTO STRIP ============ */
+    #photo-strip { background: var(--cream); padding: 30px 0 40px; }
+    .strip { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    @media (min-width: 820px) { .strip { grid-template-columns: repeat(3, 1fr); } }
+    .frame {
+      background: #fff; border: 1px solid var(--gray); border-radius: 12px; padding: 14px; box-shadow: 0 8px 26px rgba(0,0,0,.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
+    }
+    .frame:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .mat { background: #f5f2eb; border: 1px solid #e6e1d8; padding: 10px; border-radius: 8px; overflow: hidden; }
+    .bw { filter: grayscale(100%) contrast(1.1); width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; border-radius: 6px; transition: filter 0.3s ease, transform 0.3s ease; }
+    .frame:hover .bw { filter: grayscale(80%) contrast(1.05); transform: scale(1.05); }
+    .caption { margin: .6rem 0 0; text-align: center; font-weight: 700; color: var(--denim); letter-spacing: .04em; font-size: .9rem; }
+
+    /* ============ FOOTER ============ */
+    footer { background: var(--cream); border-top: 1px solid var(--gray); padding: 3rem 0 1.5rem; color: var(--denim); }
+    footer .grid { display: grid; gap: 2rem; grid-template-columns: 1fr; }
+    @media (min-width: 760px) { footer .grid { grid-template-columns: 1.2fr 1fr 1fr; } }
+    footer h4 { font-weight: 900; text-transform: uppercase; letter-spacing: .12em; font-size: .95rem; margin: 0 0 .85rem; color: var(--denim); }
+    footer ul { list-style: none; margin: 0; padding: 0; }
+    footer li { margin: .4rem 0; }
+    footer a { color: inherit; text-decoration: none; font-weight: 600; transition: color 0.2s ease, transform 0.2s ease; display: inline-block; }
+    footer a:hover { color: var(--amber); transform: translateX(3px); }
+    .brand-footer { font-family: 'Charm', cursive; font-weight: 700; font-size: 1.8rem; margin-bottom: .3rem; display: block; color: var(--denim); }
+    .tag { font-weight: 700; letter-spacing: .08em; color: var(--amber); font-size: .95rem; }
+    .socials { display: flex; gap: .7rem; margin-top: .85rem; }
+    .socials a { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--gray); border-radius: 50%; background: #fff; transition: all .25s ease; transform: translateX(0); }
+    .socials a:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(199,150,59,0.3); }
+    .bottom { border-top: 1px solid var(--gray); margin-top: 2.5rem; padding-top: 1.25rem; font-size: .85rem; color: #555; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .8rem; }
+
+    /* ============ STICKY ORDER BUTTON (Mobile) ============ */
+    .sticky-order { position: fixed; bottom: 20px; right: 20px; z-index: 40; display: none; animation: slideInBottom 0.5s ease-out; }
+    @keyframes slideInBottom { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    .sticky-order.visible { display: block; }
+    @media (min-width: 900px) { .sticky-order { display: none !important; } }
+    .sticky-order .btn { padding: 1rem 1.5rem; font-size: 1rem; box-shadow: 0 8px 30px rgba(199,150,59,0.4); }
+    .sticky-order .btn:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(199,150,59,0.5); }
+
+    /* ============ SCROLL-TO-TOP BUTTON ============ */
+    .scroll-top {
+      position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background: var(--amber); color: white; border: none; border-radius: 50%;
+      cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow); transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 39; font-size: 1.2rem;
+    }
+    .scroll-top.visible { display: flex; animation: fadeInUp 0.3s ease-out; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .scroll-top:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(199,150,59,0.4); }
+
+    /* ============ IMPROVED MOBILE RESPONSIVENESS ============ */
+    @media (max-width: 768px) {
+      #hero h2 { font-size: clamp(2.2rem, 8vw, 3rem); }
+      #hero p { font-size: 1rem; }
+      .section-heading { flex-direction: column; align-items: flex-start; gap: .5rem; }
+      .btn { width: 100%; justify-content: center; }
+      #hero .buttons { flex-direction: column; width: 100%; }
+      .cta-row { flex-direction: column; width: 100%; }
+      .cta-row .btn { width: 100%; }
+      /* Larger touch targets */
+      .menu > li > a, .menu > li > button, .btn { min-height: 44px; }
+    }
+
+    /* ============ ACCESSIBILITY ============ */
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,1px,1px);white-space:nowrap;border:0}
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .menu-card,.board{ transform: none !important; }
+    }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+    @media (prefers-contrast: high) {
+      .btn { border: 2px solid currentColor; }
+      .card, .menu-card { border: 2px solid var(--black); }
+    }
+  </style>
+
+  <!-- JSON-LD: Restaurant schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Restaurant",
+    "name":"Green's Restaurant & Bakery",
+    "image":"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=80",
+    "servesCuisine":"Southern, American",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"123 Market Street",
+      "addressLocality":"Oak Ridge",
+      "addressRegion":"TN",
+      "postalCode":"37830",
+      "addressCountry":"US"
+    },
+    "telephone":"+1-865-555-1234",
+    "url":"https://example.com",
+    "sameAs":[
+      "https://www.facebook.com/greens",
+      "https://www.instagram.com/greens",
+      "https://www.tripadvisor.com/Profile/greens"
+    ],
+    "openingHoursSpecification":[
+      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"11:00","closes":"20:00"},
+      {"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"10:00","closes":"20:00"}
+    ],
+    "acceptsReservations": "No",
+    "priceRange":"$$"
+  }
+  </script>
+</head>
+<body id="home">
+
+  <!-- ===== HEADER ===== -->
+  <header role="banner">
+    <div class="wrap bar">
+      <a class="brand" href="#home" aria-label="Green's Restaurant & Bakery">
+        <span class="brand__line1">
+          <span class="brand__script">Green's</span>
+          <span class="brand__restaurant">Restaurant</span>
+        </span>
+        <span class="brand__line2">&amp; Bakery</span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="menu" id="menu-desktop">
+          <li><a href="#home" aria-current="page"><span class="label">Home</span></a></li>
+          <li>
+            <button class="has-dd" aria-expanded="false" aria-controls="dd-menu">
+              <span class="label">Menu</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+            </button>
+            <div id="dd-menu" class="dropdown" role="menu" aria-label="Menu">
+              <a href="#main-menu" role="menuitem">Main Menu</a>
+              <a href="#green-beans" role="menuitem">Our Green Beans</a>
+              <a href="#bakery" role="menuitem">Bakery</a>
+            </div>
+          </li>
+          <li><a href="#chalk-wall"><span class="label">Specials</span></a></li>
+          <li>
+            <button class="has-dd" aria-expanded="false" aria-controls="dd-story">
+              <span class="label">Our Story</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
+            </button>
+            <div id="dd-story" class="dropdown" role="menu" aria-label="Our Story">
+              <a href="#grill" role="menuitem">Our Grill</a>
+              <a href="#community" role="menuitem">Community Involvement</a>
+              <a href="#photo-strip" role="menuitem">Gallery</a>
+              <a href="#vlog" role="menuitem">Check out our Vlog</a>
+            </div>
+          </li>
+          <li><a href="#news"><span class="label">News</span></a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobile-panel" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div id="mobile-panel" class="navpanel" aria-hidden="true">
+      <div class="wrap">
+        <ul class="menu" id="menu-mobile">
+          <li><a href="#home"><span class="label">Home</span></a></li>
+          <li>
+            <button class="has-dd" aria-expanded="false"><span class="label">Menu</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i></button>
+            <div class="dropdown">
+              <a href="#main-menu">Main Menu</a>
+              <a href="#green-beans">Our Green Beans</a>
+              <a href="#bakery">Bakery</a>
+            </div>
+          </li>
+          <li><a href="#chalk-wall"><span class="label">Specials</span></a></li>
+          <li>
+            <button class="has-dd" aria-expanded="false"><span class="label">Our Story</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i></button>
+            <div class="dropdown">
+              <a href="#grill">Our Grill</a>
+              <a href="#community">Community Involvement</a>
+              <a href="#photo-strip">Gallery</a>
+              <a href="#vlog">Check out our Vlog</a>
+            </div>
+          </li>
+          <li><a href="#news"><span class="label">News</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" aria-label="Hero">
+    <div class="wrap-hero">
+      <div class="hero-text">
+        <div class="tagline">Soulful. Southern. Comfort.</div>
+        <h2>From scratch, every morning.</h2>
+        <p>For over a decade, Green's has served up family-recipe comfort food and fresh-baked pies from our kitchen on Market Street. Come by for breakfast, lunch, or a slice to go.</p>
+        <div class="buttons">
+          <a href="#menu-teaser" class="btn primary"><i class="fa-solid fa-utensils"></i> View Menu</a>
+          <a href="#hours" class="btn alt"><i class="fa-solid fa-location-dot"></i> Find Us</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <picture>
+          <source
+            srcset="
+              https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=2000&q=80 2000w,
+              https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80 1600w,
+              https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80 1200w"
+            media="(min-width: 900px)">
+          <img
+            src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=80"
+            alt="Comfort food table setting with southern dishes, biscuits, sides and tea"
+            fetchpriority="high" decoding="async" loading="eager"
+            width="1600" height="900"
+            sizes="(max-width: 900px) 100vw, 50vw">
+        </picture>
+      </div>
+    </div>
+    <div class="checker" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== HOURS & LOCATION ===== -->
+  <section id="hours" aria-label="Hours and Location">
+    <div class="wrap-hours">
+      <div class="section-heading">
+        <h3>Visit Us</h3>
+        <div class="sub">Drop by for lunch or pick up something sweet on your way home.</div>
+      </div>
+
+      <div class="grid">
+        <!-- Hours -->
+        <article class="card hours" aria-label="Opening Hours">
+          <h4>Hours</h4>
+          <table aria-label="Hours table">
+            <tr><td>Mon–Fri</td><td style="text-align:right;">11:00a – 8:00p</td></tr>
+            <tr><td>Saturday</td><td style="text-align:right;">10:00a – 8:00p</td></tr>
+            <tr><td>Sunday</td><td style="text-align:right;">Closed</td></tr>
+          </table>
+          <div class="callout"><i class="fa-solid fa-star"></i> Daily specials after 11am</div>
+        </article>
+
+        <!-- Location -->
+        <article class="card location" aria-label="Location">
+          <h4>Location</h4>
+          <div class="row">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>123 Market Street<br>Oak Ridge, TN 37830</div>
+          </div>
+          <div class="map" role="img" aria-label="Map showing 123 Market Street, Oak Ridge">
+            <a href="https://www.google.com/maps/search/?api=1&query=123+Market+Street+Oak+Ridge+TN+37830" class="sr-only">Open directions to Green’s in Google Maps</a>
+          </div>
+        </article>
+
+        <!-- Contact -->
+        <article class="card contact" aria-label="Contact">
+          <h4>Contact</h4>
+          <div class="row"><i class="fa-solid fa-phone"></i><div>(865) 555-1234</div></div>
+          <div class="row"><i class="fa-solid fa-envelope"></i><div>hello@greensrestaurant.com</div></div>
+          <div class="btnbar">
+            <a class="btn primary" href="#menu-teaser"><i class="fa-solid fa-utensils"></i> View Menu</a>
+            <a class="btn" href="https://maps.google.com" target="_blank" rel="noopener"><i class="fa-solid fa-map"></i> Directions</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="checker" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===== MENU TEASER ===== -->
+  <section id="menu-teaser" aria-label="Menu Highlights">
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <p class="eyebrow">On the Menu</p>
+          <p class="sub">Comfort plates, farm-fresh sides, and scratch-made sweets.</p>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#main-menu"><i class="fa-solid fa-utensils"></i> Full Menu</a>
+          <a class="btn" href="#bakery"><i class="fa-solid fa-cake-candles"></i> Bakery Case</a>
+        </div>
+      </div>
+
+      <div class="grid">
+        <!-- Plates -->
+        <article class="menu-card" aria-label="Plates">
+          <div class="media">
+            <span class="badge">Plates</span>
+            <img src="https://i.imgur.com/JipFYnO.jpg" alt="Southern plate: crispy chicken, greens and sides" loading="lazy" decoding="async">
+          </div>
+          <div class="body">
+            <h4 class="title">Crispy &amp; Comforting</h4>
+            <p class="desc">Chicken fried steak, country chicken, pot roast and more—served with your pick of sides.</p>
+            <a class="link" href="#main-menu">See plates <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <!-- Sides -->
+        <article class="menu-card" aria-label="Sides">
+          <div class="media">
+            <span class="badge">Sides</span>
+            <img src="https://i.imgur.com/E2ylUmz.jpg" alt="Southern sides: green beans, mashed potatoes, cornbread" loading="lazy" decoding="async">
+          </div>
+          <div class="body">
+            <h4 class="title">From-scratch Sides</h4>
+            <p class="desc">Our famous green beans, mashed potatoes, mac &amp; cheese, collards, cornbread, and more.</p>
+            <a class="link" href="#sides">Browse sides <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <!-- Bakery -->
+        <article class="menu-card" aria-label="Bakery">
+          <div class="media">
+            <span class="badge">Bakery</span>
+            <img src="https://i.imgur.com/TJLNqaO.jpg" alt="Bakery treats: chocolate cake, bars and cookies" loading="lazy" decoding="async">
+          </div>
+          <div class="body">
+            <h4 class="title">Sweet Finishes</h4>
+            <p class="desc">Chocolate layer cake, chess bars, cookies, coconut cream pie and seasonal favorites.</p>
+            <a class="link" href="#bakery">See bakery <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+
+      <div class="checker" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===== CHALKBOARD WALL (Daily Specials) ===== -->
+  <section id="chalk-wall" aria-label="Daily Specials">
+    <div class="wrap">
+      <div class="section-heading">
+        <h3>Today's Specials</h3>
+        <div class="sub">Written fresh each morning — just like our food.</div>
+      </div>
+
+      <div class="chalkboards">
+        <!-- Specials board (auto-fills from weekday) -->
+        <article class="board" aria-label="Today's Lunch Specials">
+          <span class="badge" id="cw-day">Today</span>
+          <div class="slate">
+            <h4 class="chalk-title">Today's Specials</h4>
+            <p class="chalk-sub" id="chalk-sub">Served after 11am • While they last</p>
+            <ul class="chalk-list" id="cw-specials">
+              <!-- JS will populate this -->
+            </ul>
+            <p class="chalk-note">Two sides & cornbread with plates.</p>
+          </div>
+        </article>
+
+        <!-- Desserts board (static list) -->
+        <article class="board" aria-label="Desserts">
+          <div class="slate">
+            <h4 class="chalk-title">Desserts</h4>
+            <p class="chalk-sub">Scratch-made, by the slice</p>
+            <ul class="chalk-list">
+              <li><span>Chocolate Layer Cake</span><span class="chalk-price">$4.99</span></li>
+              <li><span>Lemon Icebox Pie</span><span class="chalk-price">$4.79</span></li>
+              <li><span>Coconut Cream Pie</span><span class="chalk-price">$4.99</span></li>
+              <li><span>Chess Bars</span><span class="chalk-price">$3.99</span></li>
+              <li><span>Banana Pudding</span><span class="chalk-price">$4.49</span></li>
+            </ul>
+            <p class="chalk-note">Whole pies available — ask at the bakery case.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 1950s PHOTO STRIP ===== -->
+  <section id="photo-strip" aria-label="Historic Photos">
+    <div class="wrap">
+      <div class="strip">
+        <figure class="frame">
+          <div class="mat">
+            <img class="bw" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1600&auto=format&fit=crop" alt="Historic cafe interior" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="caption">Jackson Square, circa 1950s</figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="mat">
+            <img class="bw" src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop" alt="Original storefront" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="caption">Original Storefront</figcaption>
+        </figure>
+        <figure class="frame">
+          <div class="mat">
+            <img class="bw" src="https://images.unsplash.com/photo-1429552077091-836152271555?q=80&w=1600&auto=format&fit=crop" alt="Family at the counter" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="caption">Family at the Counter</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer aria-label="Footer">
+    <div class="wrap">
+      <div class="grid">
+        <!-- Brand & tagline -->
+        <div>
+          <span class="brand-footer">Green's</span>
+          <div class="tag">Soulful. Southern. Comfort.</div>
+          <p style="max-width:40ch; margin:.8rem 0 0;">
+            Serving Oak Ridge since 2010 — homestyle plates, fresh-baked pies, and friendly faces every day.
+          </p>
+          <div class="socials" aria-label="Social Links">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="TripAdvisor"><i class="fa-brands fa-tripadvisor"></i></a>
+          </div>
+        </div>
+
+        <!-- Visit -->
+        <div>
+          <h4>Visit Us</h4>
+          <ul>
+            <li>123 Market Street</li>
+            <li>Oak Ridge, TN 37830</li>
+            <li><a href="https://maps.google.com" target="_blank" rel="noopener">Get Directions</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Hours</h4>
+          <ul>
+            <li>Mon – Fri  11 a – 8 p</li>
+            <li>Saturday  10 a – 8 p</li>
+            <li>Sunday  Closed</li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:18655551234">(865) 555-1234</a></li>
+            <li><a href="mailto:hello@greensrestaurant.com">hello@greensrestaurant.com</a></li>
+          </ul>
+          <h4 style="margin-top:1rem;">Quick Links</h4>
+          <ul>
+            <li><a href="#main-menu">Menu</a></li>
+            <li><a href="#bakery">Bakery</a></li>
+            <li><a href="#chalk-wall">Specials</a></li>
+            <li><a href="#community">Our Story</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div>© 2025 Green's Restaurant & Bakery · All Rights Reserved</div>
+        <div>Website by HC Web Labs</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =================== GREEN'S RESTAURANT — ENHANCED JAVASCRIPT ===================
+    (function() {
+      'use strict';
+
+      // ===== DAILY SPECIALS DATA =====
+      const specialsByDay = {
+        0: [{ title: "Closed on Sundays", desc: "See you Monday for Meatloaf!", price: "" }],
+        1: [
+          { title: "Meatloaf Monday", desc: "Homestyle glaze, two sides & cornbread.", price: "$12.99" },
+          { title: "Chicken & Dumplings", desc: "Scratch dumplings, slow-simmered broth.", price: "$11.99" },
+          { title: "Banana Pudding", desc: "Vanilla wafers, whipped cream on top.", price: "$4.49" }
+        ],
+        2: [
+          { title: "Country Fried Steak", desc: "Pepper cream gravy & two sides.", price: "$13.49" },
+          { title: "Pot Roast", desc: "Slow-braised chuck with carrots & onions.", price: "$13.99" },
+          { title: "Coconut Cream Pie", desc: "Toasted coconut, silky custard.", price: "$4.99" }
+        ],
+        3: [
+          { title: "Chicken & Dumplings", desc: "Comfort classic, made fresh.", price: "$11.99" },
+          { title: "Smothered Pork Chop", desc: "Onion gravy & mashed potatoes.", price: "$12.99" },
+          { title: "Chocolate Cake Slice", desc: "Double layer, rich frosting.", price: "$4.99" }
+        ],
+        4: [
+          { title: "Turkey & Dressing", desc: "Brown gravy, cranberry relish.", price: "$12.99" },
+          { title: "Chicken Pot Pie", desc: "Flaky crust, creamy filling.", price: "$12.49" },
+          { title: "Chess Bars", desc: "Buttery vanilla-gooey squares.", price: "$3.99" }
+        ],
+        5: [
+          { title: "Catfish Friday", desc: "Cornmeal fried, hushpuppies & slaw.", price: "$13.99" },
+          { title: "Country Fried Steak", desc: "Pepper cream gravy & two sides.", price: "$13.49" },
+          { title: "Lemon Icebox Pie", desc: "Bright, creamy, graham crust.", price: "$4.79" }
+        ],
+        6: [
+          { title: "Smoked Pulled Pork Plate", desc: "House BBQ sauce & two sides.", price: "$12.99" },
+          { title: "Chicken & Dumplings", desc: "Weekend favorite, from-scratch.", price: "$11.99" },
+          { title: "Peach Cobbler", desc: "Warm with vanilla whip.", price: "$4.79" }
+        ]
+      };
+      window.specialsByDay = specialsByDay;
+
+      const header = document.querySelector('header');
+      const burger = document.getElementById('hamburger');
+      const panel = document.getElementById('mobile-panel');
+
+      let lastScroll = 0;
+
+      function handleScroll() {
+        const currentScroll = window.scrollY;
+        if (currentScroll > 8) { header.classList.add('is-stuck'); } else { header.classList.remove('is-stuck'); }
+
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        if (scrollTopBtn) {
+          if (currentScroll > 500) { scrollTopBtn.classList.add('visible'); }
+          else { scrollTopBtn.classList.remove('visible'); }
+        }
+
+        const stickyOrder = document.querySelector('.sticky-order');
+        if (stickyOrder && window.innerWidth < 900) {
+          if (currentScroll > 800) { stickyOrder.classList.add('visible'); }
+          else { stickyOrder.classList.remove('visible'); }
+        }
+
+        lastScroll = currentScroll;
+      }
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+      if (burger && panel) {
+        burger.addEventListener('click', () => {
+          const isOpen = panel.classList.toggle('open');
+          burger.setAttribute('aria-expanded', isOpen);
+          panel.setAttribute('aria-hidden', !isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        panel.addEventListener('click', (e) => {
+          const link = e.target.closest('a');
+          if (link) {
+            panel.classList.remove('open');
+            burger.setAttribute('aria-expanded', 'false');
+            panel.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      function closeAllDropdowns() {
+        document.querySelectorAll('nav li.open').forEach(li => {
+          li.classList.remove('open');
+          const btn = li.querySelector('.has-dd');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      if (header) {
+        header.addEventListener('click', (e) => {
+          const dropdownBtn = e.target.closest('.has-dd');
+          if (!dropdownBtn) {
+            if (!e.target.closest('.dropdown')) { closeAllDropdowns(); }
+            return;
+          }
+          e.preventDefault();
+          const parentLi = dropdownBtn.closest('li');
+          const wasOpen = parentLi.classList.contains('open');
+
+          const siblings = parentLi.parentElement.querySelectorAll('li.open');
+          siblings.forEach(sib => {
+            if (sib !== parentLi) {
+              sib.classList.remove('open');
+              const btn = sib.querySelector('.has-dd');
+              if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          parentLi.classList.toggle('open');
+          dropdownBtn.setAttribute('aria-expanded', !wasOpen);
+        });
+
+        header.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeAllDropdowns();
+            if (burger) burger.focus();
+          }
+        });
+      }
+
+      document.querySelectorAll('.has-dd').forEach(btn => {
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+        });
+        const parentLi = btn.closest('li');
+        if (parentLi) {
+          parentLi.addEventListener('focusout', (e) => {
+            if (!parentLi.contains(e.relatedTarget)) {
+              parentLi.classList.remove('open');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      });
+
+      // === ScrollSpy: auto-highlight current section in top nav
+      function setupScrollSpy() {
+        const sections = [
+          { id: '#home', el: document.querySelector('body') },
+          '#hours', '#menu-teaser', '#chalk-wall', '#photo-strip'
+        ].map(s => typeof s === 'string' ? { id: s, el: document.querySelector(s) } : s).filter(s => s.el);
+
+        const links = Array.from(document.querySelectorAll('nav .menu a[href^="#"]'));
+        const setCurrent = (hash) => {
+          links.forEach(a => a.removeAttribute('aria-current'));
+          const active = links.find(a => a.getAttribute('href') === hash);
+          if (active) active.setAttribute('aria-current', 'page');
+        };
+
+        setCurrent('#home');
+
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          const id = '#' + (visible.target.id || 'home');
+          setCurrent(id);
+        }, { rootMargin: '-40% 0px -50% 0px', threshold: [0.25, 0.5, 0.75] });
+
+        sections.forEach(s => observer.observe(s.el));
+      }
+
+      // === Dropdown keyboard navigation (Arrow keys/Home/End)
+      function enhanceDropdownKeyboardNav(){
+        document.querySelectorAll('nav li').forEach(li=>{
+          const trigger = li.querySelector('.has-dd');
+          const menu = li.querySelector('.dropdown');
+          if(!trigger || !menu) return;
+          const getItems = () => Array.from(menu.querySelectorAll('a,button,[role="menuitem"]'));
+
+          trigger.addEventListener('keydown', (e)=>{
+            if((e.key==='ArrowDown'||e.key==='ArrowUp') && li.classList.contains('open')){
+              e.preventDefault();
+              const items = getItems(); if(!items.length) return;
+              (e.key==='ArrowDown' ? items[0] : items[items.length-1]).focus();
+            }
+          });
+
+          menu.addEventListener('keydown',(e)=>{
+            const items = getItems();
+            const idx = items.indexOf(document.activeElement);
+            if(e.key==='ArrowDown'){ e.preventDefault(); items[(idx+1)%items.length].focus(); }
+            else if(e.key==='ArrowUp'){ e.preventDefault(); items[(idx-1+items.length)%items.length].focus(); }
+            else if(e.key==='Home'){ e.preventDefault(); items[0].focus(); }
+            else if(e.key==='End'){ e.preventDefault(); items[items.length-1].focus(); }
+            else if(e.key==='Escape'){
+              e.preventDefault(); li.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); trigger.focus();
+            }
+          });
+        });
+      }
+
+      // === Open dropdowns on hover (desktop pointer=fine only)
+      function openOnHoverDesktop(){
+        if (window.matchMedia('(pointer:fine)').matches) {
+          document.querySelectorAll('nav li').forEach(li=>{
+            const btn = li.querySelector('.has-dd');
+            const dd = li.querySelector('.dropdown');
+            if(!btn || !dd) return;
+            li.addEventListener('mouseenter', ()=>{ li.classList.add('open'); btn.setAttribute('aria-expanded','true'); });
+            li.addEventListener('mouseleave', ()=>{ li.classList.remove('open'); btn.setAttribute('aria-expanded','false'); });
+          });
+        }
+      }
+
+      // === Populate chalkboard with date + friendly subcopy
+      function populateChalkboard() {
+        const day = new Date().getDay();
+        const weekdayShort = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day];
+        const weekdayLong = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day];
+        const d = new Date();
+        const dateStamp = d.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+
+        const todaysSpecials = specialsByDay[day] || [];
+        const chalkList = document.getElementById('cw-specials');
+        const chalkDayBadge = document.getElementById('cw-day');
+        const chalkSub = document.getElementById('chalk-sub');
+
+        if (chalkList) {
+          chalkList.innerHTML = todaysSpecials.map(item => `
+            <li>
+              <span>${item.title}${item.desc ? ` — <span class="sr-only">Description:</span><em>${item.desc}</em>` : ''}</span>
+              <span class="chalk-price">${item.price || ''}</span>
+            </li>
+          `).join('');
+        }
+
+        if (chalkDayBadge) {
+          chalkDayBadge.textContent = (day === 0 ? 'Closed' : `${weekdayShort} • ${dateStamp}`);
+          if (day === 0) {
+            chalkDayBadge.style.background = '#fff1f1';
+            chalkDayBadge.style.borderColor = '#f1c0c0';
+            chalkDayBadge.style.color = '#7d1a1a';
+          }
+        }
+
+        if (chalkSub) {
+          chalkSub.textContent = (day === 0)
+            ? "Closed on Sundays • Back Monday for lunch!"
+            : `Served after 11am • ${weekdayLong} specials · While they last`;
+        }
+      }
+
+      // Smooth scroll for in-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            if (panel && panel.classList.contains('open')) {
+              panel.classList.remove('open');
+              burger.setAttribute('aria-expanded', 'false');
+              panel.setAttribute('aria-hidden', 'true');
+              document.body.style.overflow = '';
+            }
+            closeAllDropdowns();
+
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            history.pushState(null, null, href);
+          }
+        });
+      });
+
+      function handleScrollAnimations() {
+        const elements = document.querySelectorAll('.fade-in-up');
+        elements.forEach(element => {
+          const rect = element.getBoundingClientRect();
+          const isVisible = (rect.top < window.innerHeight - 100) && (rect.bottom > 0);
+          if (isVisible) element.classList.add('visible');
+        });
+      }
+
+      function addScrollAnimationClasses() {
+        const sections = [
+          '#hours .card',
+          '#menu-teaser .menu-card',
+          '#chalk-wall .board',
+          '#photo-strip .frame'
+        ];
+        sections.forEach(selector => {
+          document.querySelectorAll(selector).forEach((el, index) => {
+            el.classList.add('fade-in-up');
+            el.style.transitionDelay = `${index * 0.1}s`;
+          });
+        });
+      }
+
+      window.addEventListener('scroll', handleScrollAnimations, { passive: true });
+
+      function createScrollToTopButton() {
+        const scrollTopBtn = document.createElement('button');
+        scrollTopBtn.className = 'scroll-top';
+        scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+        scrollTopBtn.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+        scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        document.body.appendChild(scrollTopBtn);
+      }
+
+      function createStickyOrderButton() {
+        const stickyOrder = document.createElement('div');
+        stickyOrder.className = 'sticky-order';
+        stickyOrder.innerHTML = `<a href="#menu-teaser" class="btn primary"><i class="fa-solid fa-utensils"></i> Order Now</a>`;
+        document.body.appendChild(stickyOrder);
+      }
+
+      function setupLazyLoading() {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        if ('IntersectionObserver' in window) {
+          const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                img.classList.add('loaded');
+                imageObserver.unobserve(img);
+              }
+            });
+          });
+          images.forEach(img => imageObserver.observe(img));
+        }
+      }
+
+      function setupCardTiltEffect() {
+        const cards = document.querySelectorAll('.menu-card, .board');
+        cards.forEach(card => {
+          card.addEventListener('mouseenter', function() { this.style.transition = 'transform 0.1s ease'; });
+          card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+          });
+          card.addEventListener('mouseleave', function() {
+            this.style.transition = 'transform 0.3s ease';
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+          });
+        });
+      }
+
+      function improveKeyboardNav() {
+        if (panel) {
+          panel.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && panel.classList.contains('open')) {
+              const focusableElements = panel.querySelectorAll('a[href], button:not([disabled])');
+              const firstElement = focusableElements[0];
+              const lastElement = focusableElements[focusableElements.length - 1];
+              if (e.shiftKey && document.activeElement === firstElement) { e.preventDefault(); lastElement.focus(); }
+              else if (!e.shiftKey && document.activeElement === lastElement) { e.preventDefault(); firstElement.focus(); }
+            }
+          });
+        }
+      }
+
+      function trackUserInteractions() {
+        document.querySelectorAll('.btn').forEach(btn => {
+          btn.addEventListener('click', function() { console.log('CTA clicked:', this.textContent.trim()); });
+        });
+        document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+          link.addEventListener('click', () => { console.log('Phone number clicked'); });
+        });
+      }
+
+      function init() {
+        populateChalkboard();
+        addScrollAnimationClasses();
+        handleScrollAnimations();
+        createScrollToTopButton();
+        createStickyOrderButton();
+        setupLazyLoading();
+        improveKeyboardNav();
+        trackUserInteractions();
+
+        // New helpers
+        setupScrollSpy();
+        enhanceDropdownKeyboardNav();
+        openOnHoverDesktop();
+
+        if (window.innerWidth > 1024) { setupCardTiltEffect(); }
+
+        setTimeout(() => { document.body.classList.add('loaded'); }, 100);
+
+        console.log('🍽️ Green\'s Restaurant website loaded successfully!');
+        console.log(`📅 Today is ${['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()]}`);
+      }
+
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); }
+      else { init(); }
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          const stickyOrder = document.querySelector('.sticky-order');
+          if (stickyOrder && window.innerWidth >= 900) {
+            stickyOrder.classList.remove('visible');
+          }
+        }, 250);
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
