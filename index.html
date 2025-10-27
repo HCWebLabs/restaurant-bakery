@@ -416,10 +416,10 @@
 </head>
 <body id="home">
 
-  <!-- ===== HEADER (Specials removed; Contact added; canonical links) ===== -->
+  <!-- ===== HEADER (links normalized to ./ paths) ===== -->
   <header role="banner" id="site-header">
     <div class="wrap bar">
-      <a class="brand" href="/" aria-label="Green's Restaurant & Bakery">
+      <a class="brand" href="./" aria-label="Green's Restaurant & Bakery">
         <span class="brand__line1">
           <span class="brand__script">Green's</span>
           <span class="brand__restaurant">Restaurant</span>
@@ -429,11 +429,11 @@
 
       <nav aria-label="Primary">
         <ul class="menu" id="menu-desktop">
-          <li><a href="restaurant-bakery/index.html"><span class="label">Home</span></a></li>
-          <li><a href="restaurant-bakery/menu.html"><span class="label">Our Menu</span></a></li>
-          <li><a href="restaurant-bakery/our-story.html"><span class="label">Our Story</span></a></li>
-          <li><a href="restaurant-bakery/gallery.html"><span class="label">Gallery</span></a></li>
-          <li><a href="restaurant-bakery/contact.html"><span class="label">Contact Us</span></a></li>
+          <li><a href="./index.html"><span class="label">Home</span></a></li>
+          <li><a href="./menu.html"><span class="label">Our Menu</span></a></li>
+          <li><a href="./our-story.html"><span class="label">Our Story</span></a></li>
+          <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="./contact.html"><span class="label">Contact Us</span></a></li>
         </ul>
       </nav>
 
@@ -445,23 +445,24 @@
     <div id="mobile-panel" class="navpanel" aria-hidden="true">
       <div class="wrap">
         <ul class="menu" id="menu-mobile">
-          <li><a href="restaurant-bakery/index.html"><span class="label">Home</span></a></li>
-          <li><a href="restaurant-bakery/menu.html"><span class="label">Our Menu</span></a></li>
-          <li><a href="restaurant-bakery/our-story.html"><span class="label">Our Story</span></a></li>
-          <li><a href="restaurant-bakery/gallery.html"><span class="label">Gallery</span></a></li>
-          <li><a href="restaurant-bakery/contact.html"><span class="label">Contact Us</span></a></li>
+          <li><a href="./index.html"><span class="label">Home</span></a></li>
+          <li><a href="./menu.html"><span class="label">Our Menu</span></a></li>
+          <li><a href="./our-story.html"><span class="label">Our Story</span></a></li>
+          <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="./contact.html"><span class="label">Contact Us</span></a></li>
         </ul>
       </div>
     </div>
   </header>
 
-  <!-- Auto-mark current page in the nav -->
+  <!-- Auto-mark current page in the nav (robust for index.html and ./) -->
   <script>
     (function(){
-      const path = location.pathname.replace(/\/index\.html?$/, '/');
+      const norm = p => p.replace(/index\.html?$/i,'').replace(/\/+$/,'') || '/';
+      const here = norm(location.pathname);
       document.querySelectorAll('#site-header a[href]').forEach(a=>{
-        const url = new URL(a.href, location.origin);
-        if (url.pathname === path) a.setAttribute('aria-current','page');
+        const url = new URL(a.getAttribute('href'), location.href);
+        if (norm(url.pathname) === here) a.setAttribute('aria-current','page');
       });
     })();
   </script>
@@ -556,8 +557,8 @@
           <p class="sub">Comfort plates, farm-fresh sides, and scratch-made sweets.</p>
         </div>
         <div class="cta-row">
-          <a class="btn primary" href="/menu.html#entrees"><i class="fa-solid fa-utensils"></i> Full Menu</a>
-          <a class="btn" href="/menu.html#desserts"><i class="fa-solid fa-cake-candles"></i> Bakery Case</a>
+          <a class="btn primary" href="./menu.html#entrees"><i class="fa-solid fa-utensils"></i> Full Menu</a>
+          <a class="btn" href="./menu.html#desserts"><i class="fa-solid fa-cake-candles"></i> Bakery Case</a>
         </div>
       </div>
 
@@ -571,7 +572,7 @@
           <div class="body">
             <h4 class="title">Crispy &amp; Comforting</h4>
             <p class="desc">Chicken fried steak, country chicken, pot roast and more—served with your pick of sides.</p>
-            <a class="link" href="/menu.html#entrees">See plates <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="./menu.html#entrees">See plates <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
 
@@ -584,7 +585,7 @@
           <div class="body">
             <h4 class="title">From-scratch Sides</h4>
             <p class="desc">Our famous green beans, mashed potatoes, mac &amp; cheese, collards, cornbread, and more.</p>
-            <a class="link" href="/menu.html#entrees">Browse sides <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="./menu.html#entrees">Browse sides <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
 
@@ -597,7 +598,7 @@
           <div class="body">
             <h4 class="title">Sweet Finishes</h4>
             <p class="desc">Chocolate layer cake, chess bars, cookies, coconut cream pie and seasonal favorites.</p>
-            <a class="link" href="/menu.html#desserts">See bakery <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="./menu.html#desserts">See bakery <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
       </div>
@@ -716,11 +717,11 @@
           </ul>
           <h4 style="margin-top:1rem;">Quick Links</h4>
           <ul>
-            <li><a href="/menu.html#entrees">Menu</a></li>
-            <li><a href="/menu.html#desserts">Bakery</a></li>
-            <li><a href="/our-story.html#community">Our Story</a></li>
-            <li><a href="/gallery.html">Gallery</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="./menu.html#entrees">Menu</a></li>
+            <li><a href="./menu.html#desserts">Bakery</a></li>
+            <li><a href="./our-story.html#community">Our Story</a></li>
+            <li><a href="./gallery.html">Gallery</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </div>
       </div>
@@ -892,7 +893,7 @@
       function createStickyOrderButton() {
         const stickyOrder = document.createElement('div');
         stickyOrder.className = 'sticky-order';
-        stickyOrder.innerHTML = `<a href="/menu.html#entrees" class="btn primary"><i class="fa-solid fa-utensils"></i> Order Now</a>`;
+        stickyOrder.innerHTML = `<a href="./menu.html#entrees" class="btn primary"><i class="fa-solid fa-utensils"></i> Order Now</a>`;
         document.body.appendChild(stickyOrder);
       }
 
