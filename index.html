@@ -288,7 +288,7 @@
     #chalk-wall .section-heading h3 { color: #2e2a25; font-size: 1.15rem; }
     #chalk-wall .section-heading .sub { color: #3a342d; }
 
-    .chalkboards { display: grid; gap: 20px; grid-template-columns: 1fr; margin-top: 10px; }
+    .chalkboards { display: grid; gap: 20px; grid-template-columns: 1fr; }
     @media (min-width: 900px) { .chalkboards { grid-template-columns: 1fr 1fr; } }
 
     .board {
@@ -432,7 +432,7 @@
 </head>
 <body id="home">
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER (Specials removed from nav) ===== -->
   <header role="banner">
     <div class="wrap bar">
       <a class="brand" href="#home" aria-label="Green's Restaurant & Bakery">
@@ -445,31 +445,13 @@
 
       <nav aria-label="Primary">
         <ul class="menu" id="menu-desktop">
-          <li><a href="#home" aria-current="page"><span class="label">Home</span></a></li>
-          <li>
-            <button class="has-dd" aria-expanded="false" aria-controls="dd-menu">
-              <span class="label">Menu</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
-            </button>
-            <div id="dd-menu" class="dropdown" role="menu" aria-label="Menu">
-              <a href="#main-menu" role="menuitem">Main Menu</a>
-              <a href="#green-beans" role="menuitem">Our Green Beans</a>
-              <a href="#bakery" role="menuitem">Bakery</a>
-            </div>
-          </li>
-          <li><a href="#chalk-wall"><span class="label">Specials</span></a></li>
-          <li>
-            <button class="has-dd" aria-expanded="false" aria-controls="dd-story">
-              <span class="label">Our Story</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i>
-            </button>
-            <div id="dd-story" class="dropdown" role="menu" aria-label="Our Story">
-              <a href="#grill" role="menuitem">Our Grill</a>
-              <a href="#community" role="menuitem">Community Involvement</a>
-              <a href="#photo-strip" role="menuitem">Gallery</a>
-              <a href="#vlog" role="menuitem">Check out our Vlog</a>
-            </div>
-          </li>
-          <li><a href="#news"><span class="label">News</span></a></li>
-        </ul>
+  <li><a href="/#home"><span class="label">Home</span></a></li>
+  <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
+  <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+  <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
+  <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+</ul>
+
       </nav>
 
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobile-panel" aria-expanded="false">
@@ -480,27 +462,13 @@
     <div id="mobile-panel" class="navpanel" aria-hidden="true">
       <div class="wrap">
         <ul class="menu" id="menu-mobile">
-          <li><a href="#home"><span class="label">Home</span></a></li>
-          <li>
-            <button class="has-dd" aria-expanded="false"><span class="label">Menu</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i></button>
-            <div class="dropdown">
-              <a href="#main-menu">Main Menu</a>
-              <a href="#green-beans">Our Green Beans</a>
-              <a href="#bakery">Bakery</a>
-            </div>
-          </li>
-          <li><a href="#chalk-wall"><span class="label">Specials</span></a></li>
-          <li>
-            <button class="has-dd" aria-expanded="false"><span class="label">Our Story</span> <i class="fa-solid fa-angle-down" aria-hidden="true"></i></button>
-            <div class="dropdown">
-              <a href="#grill">Our Grill</a>
-              <a href="#community">Community Involvement</a>
-              <a href="#photo-strip">Gallery</a>
-              <a href="#vlog">Check out our Vlog</a>
-            </div>
-          </li>
-          <li><a href="#news"><span class="label">News</span></a></li>
-        </ul>
+  <li><a href="/#home"><span class="label">Home</span></a></li>
+  <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
+  <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+  <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
+  <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+</ul>
+
       </div>
     </div>
   </header>
