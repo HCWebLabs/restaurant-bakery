@@ -139,10 +139,10 @@
 </head>
 <body id="our-story">
 
-  <!-- ===== HEADER (UPDATED: remove Specials, add Contact) ===== -->
+  <!-- ===== HEADER (doc-relative links + aria-current) ===== -->
   <header role="banner" id="site-header">
     <div class="wrap bar">
-      <a class="brand" href="/" aria-label="Green's Restaurant & Bakery">
+      <a class="brand" href="./" aria-label="Green's Restaurant & Bakery">
         <span class="brand__line1"><span class="brand__script">Green's</span><span class="brand__restaurant">Restaurant</span></span>
         <span class="brand__line2">&amp; Bakery</span>
       </a>
@@ -151,7 +151,7 @@
         <ul class="menu" id="menu-desktop">
           <li><a href="./index.html"><span class="label">Home</span></a></li>
           <li><a href="./menu.html"><span class="label">Our Menu</span></a></li>
-          <li><a href="./our-story.html"><span class="label">Our Story</span></a></li>
+          <li><a href="./our-story.html" aria-current="page"><span class="label">Our Story</span></a></li>
           <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
           <li><a href="./contact.html"><span class="label">Contact Us</span></a></li>
         </ul>
@@ -165,9 +165,9 @@
     <div id="mobile-panel" class="navpanel" aria-hidden="true">
       <div class="wrap">
         <ul class="menu" id="menu-mobile">
-         <li><a href="./index.html"><span class="label">Home</span></a></li>
+          <li><a href="./index.html"><span class="label">Home</span></a></li>
           <li><a href="./menu.html"><span class="label">Our Menu</span></a></li>
-          <li><a href="./our-story.html"><span class="label">Our Story</span></a></li>
+          <li><a href="./our-story.html" aria-current="page"><span class="label">Our Story</span></a></li>
           <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
           <li><a href="./contact.html"><span class="label">Contact Us</span></a></li>
         </ul>
@@ -325,9 +325,9 @@
           </ul>
           <h4 style="margin-top:1rem;">Quick Links</h4>
           <ul>
-            <li><a href="/menu.html#entrees">Menu</a></li>
-            <li><a href="/menu.html#desserts">Bakery</a></li>
-            <li><a href="/#chalk-wall">Specials</a></li>
+            <li><a href="./menu.html#entrees">Menu</a></li>
+            <li><a href="./menu.html#desserts">Bakery</a></li>
+            <li><a href="./index.html#chalk-wall">Specials</a></li>
             <li><a href="#community">Our Story</a></li>
           </ul>
         </div>
