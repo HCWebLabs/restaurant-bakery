@@ -205,10 +205,10 @@
 </head>
 <body id="menu">
 
-  <!-- ===== HEADER (updated: remove Specials, add Contact) ===== -->
+  <!-- ===== HEADER (updated to document-relative links) ===== -->
   <header role="banner">
     <div class="wrap bar">
-      <a class="brand" href="/" aria-label="Green's Restaurant & Bakery">
+      <a class="brand" href="./" aria-label="Green's Restaurant & Bakery">
         <span class="brand__line1">
           <span class="brand__script">Green's</span>
           <span class="brand__restaurant">Restaurant</span>
@@ -218,11 +218,11 @@
 
       <nav aria-label="Primary">
         <ul class="menu" id="menu-desktop">
-           <li><a href="/index.html"><span class="label">Home</span></a></li>
-          <li><a href="/menu.html"><span class="label">Menu</span></a></li>
-          <li><a href="/our-story.html"><span class="label">Our Story</span></a></li>
-          <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
-          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+          <li><a href="./index.html"><span class="label">Home</span></a></li>
+          <li><a href="./menu.html#entrees" aria-current="page"><span class="label">Menu</span></a></li>
+          <li><a href="./our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="./contact.html"><span class="label">Contact</span></a></li>
         </ul>
       </nav>
 
@@ -234,11 +234,11 @@
     <div id="mobile-panel" class="navpanel" aria-hidden="true">
       <div class="wrap">
         <ul class="menu" id="menu-mobile">
-           <li><a href="/index.html"><span class="label">Home</span></a></li>
-          <li><a href="/menu.html"><span class="label">Menu</span></a></li>
-          <li><a href="/our-story.html"><span class="label">Our Story</span></a></li>
-          <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
-          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+          <li><a href="./index.html"><span class="label">Home</span></a></li>
+          <li><a href="./menu.html#entrees"><span class="label">Menu</span></a></li>
+          <li><a href="./our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="./gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="./contact.html"><span class="label">Contact</span></a></li>
         </ul>
       </div>
     </div>
@@ -441,10 +441,11 @@
           </ul>
           <h4 style="margin-top:1rem;">Quick Links</h4>
           <ul>
-            <li><a href="#entrees">Menu</a></li>
-            <li><a href="#desserts">Bakery</a></li>
-            <li><a href="#desserts">Specials</a></li>
-            <li><a href="#green-beans">Our Story</a></li>
+            <li><a href="./menu.html#entrees">Menu</a></li>
+            <li><a href="./menu.html#desserts">Bakery</a></li>
+            <li><a href="./our-story.html#community">Our Story</a></li>
+            <li><a href="./gallery.html">Gallery</a></li>
+            <li><a href="./contact.html">Contact</a></li>
           </ul>
         </div>
       </div>
@@ -593,7 +594,6 @@
 
     // ===== Motions from Home (fade-in, tilt, scroll-top, lazy loading) =====
     (function effects(){
-      // mark elements for fade-in-up and stagger
       function addScrollAnimationClasses() {
         const selectors = [
           '#content-col .panel',
@@ -683,10 +683,8 @@
       setupLazyLoading();
       if (innerWidth > 1024) setupCardTiltEffect();
 
-      // Add a tiny "loaded" flourish like Home
       setTimeout(()=>document.body.classList.add('loaded'), 100);
     })();
   </script>
 </body>
 </html>
-
