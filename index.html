@@ -115,27 +115,11 @@
     .menu > li > button:hover .label,
     .menu > li > a[aria-current="page"] .label { background-size: 100% 2px; }
 
-    .menu > li > .has-dd i { color: var(--denim); font-size: .95em; line-height: 1; transition: transform .25s ease; }
-    .menu > li.open > .has-dd i { transform: rotate(180deg); }
-
     @media (min-width: 900px) {
       .menu { display: flex; flex-direction: row; align-items: center; gap: 22px; padding: 0; }
       .menu > li > a, .menu > li > button { padding: 8px 6px; border-radius: 0; }
       .menu > li { position: relative; }
     }
-
-    .dropdown {
-      background: #fff; border: 1px solid var(--gray); border-radius: var(--radius-sm); box-shadow: var(--shadow);
-      padding: 10px; margin-top: 6px; min-width: 220px; display: none; opacity: 0; transform: translateY(12px);
-      transition: opacity .25s ease-out, transform .25s ease-out;
-    }
-    .dropdown a {
-      display: block; padding: 10px 12px; border-radius: 8px; font-weight: 600; font-size: .95rem;
-      transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
-    }
-    .dropdown a:hover { background: var(--cream); color: var(--amber); transform: translateX(4px); }
-    .menu > li.open > .dropdown { display: block; opacity: 1; transform: translateY(0); }
-    @media (min-width: 900px) { .menu > li.open > .dropdown { position: absolute; left: 0; top: 100%; } }
 
     .hamburger {
       display: inline-flex; flex-direction: column; gap: 4px; width: 36px; height: 32px; align-items: center; justify-content: center;
@@ -432,10 +416,10 @@
 </head>
 <body id="home">
 
-  <!-- ===== HEADER (Specials removed from nav) ===== -->
-  <header role="banner">
+  <!-- ===== HEADER (Specials removed; Contact added; canonical links) ===== -->
+  <header role="banner" id="site-header">
     <div class="wrap bar">
-      <a class="brand" href="#home" aria-label="Green's Restaurant & Bakery">
+      <a class="brand" href="/" aria-label="Green's Restaurant & Bakery">
         <span class="brand__line1">
           <span class="brand__script">Green's</span>
           <span class="brand__restaurant">Restaurant</span>
@@ -445,13 +429,12 @@
 
       <nav aria-label="Primary">
         <ul class="menu" id="menu-desktop">
-  <li><a href="/#home"><span class="label">Home</span></a></li>
-  <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
-  <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
-  <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
-  <li><a href="/contact.html"><span class="label">Contact</span></a></li>
-</ul>
-
+          <li><a href="/"><span class="label">Home</span></a></li>
+          <li><a href="/menu.html#entrees"><span class="label">Menu</span></a></li>
+          <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+        </ul>
       </nav>
 
       <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobile-panel" aria-expanded="false">
@@ -462,16 +445,26 @@
     <div id="mobile-panel" class="navpanel" aria-hidden="true">
       <div class="wrap">
         <ul class="menu" id="menu-mobile">
-  <li><a href="/#home"><span class="label">Home</span></a></li>
-  <li><a href="/#main-menu"><span class="label">Menu</span></a></li>
-  <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
-  <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
-  <li><a href="/contact.html"><span class="label">Contact</span></a></li>
-</ul>
-
+          <li><a href="/"><span class="label">Home</span></a></li>
+          <li><a href="/menu.html#entrees"><span class="label">Menu</span></a></li>
+          <li><a href="/our-story.html#origins"><span class="label">Our Story</span></a></li>
+          <li><a href="/gallery.html"><span class="label">Gallery</span></a></li>
+          <li><a href="/contact.html"><span class="label">Contact</span></a></li>
+        </ul>
       </div>
     </div>
   </header>
+
+  <!-- Auto-mark current page in the nav -->
+  <script>
+    (function(){
+      const path = location.pathname.replace(/\/index\.html?$/, '/');
+      document.querySelectorAll('#site-header a[href]').forEach(a=>{
+        const url = new URL(a.href, location.origin);
+        if (url.pathname === path) a.setAttribute('aria-current','page');
+      });
+    })();
+  </script>
 
   <!-- ===== HERO ===== -->
   <section id="hero" aria-label="Hero">
@@ -563,8 +556,8 @@
           <p class="sub">Comfort plates, farm-fresh sides, and scratch-made sweets.</p>
         </div>
         <div class="cta-row">
-          <a class="btn primary" href="#main-menu"><i class="fa-solid fa-utensils"></i> Full Menu</a>
-          <a class="btn" href="#bakery"><i class="fa-solid fa-cake-candles"></i> Bakery Case</a>
+          <a class="btn primary" href="/menu.html#entrees"><i class="fa-solid fa-utensils"></i> Full Menu</a>
+          <a class="btn" href="/menu.html#desserts"><i class="fa-solid fa-cake-candles"></i> Bakery Case</a>
         </div>
       </div>
 
@@ -578,7 +571,7 @@
           <div class="body">
             <h4 class="title">Crispy &amp; Comforting</h4>
             <p class="desc">Chicken fried steak, country chicken, pot roast and more—served with your pick of sides.</p>
-            <a class="link" href="#main-menu">See plates <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="/menu.html#entrees">See plates <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
 
@@ -591,7 +584,7 @@
           <div class="body">
             <h4 class="title">From-scratch Sides</h4>
             <p class="desc">Our famous green beans, mashed potatoes, mac &amp; cheese, collards, cornbread, and more.</p>
-            <a class="link" href="#sides">Browse sides <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="/menu.html#entrees">Browse sides <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
 
@@ -604,7 +597,7 @@
           <div class="body">
             <h4 class="title">Sweet Finishes</h4>
             <p class="desc">Chocolate layer cake, chess bars, cookies, coconut cream pie and seasonal favorites.</p>
-            <a class="link" href="#bakery">See bakery <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="link" href="/menu.html#desserts">See bakery <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </article>
       </div>
@@ -723,10 +716,11 @@
           </ul>
           <h4 style="margin-top:1rem;">Quick Links</h4>
           <ul>
-            <li><a href="#main-menu">Menu</a></li>
-            <li><a href="#bakery">Bakery</a></li>
-            <li><a href="#chalk-wall">Specials</a></li>
-            <li><a href="#community">Our Story</a></li>
+            <li><a href="/menu.html#entrees">Menu</a></li>
+            <li><a href="/menu.html#desserts">Bakery</a></li>
+            <li><a href="/our-story.html#community">Our Story</a></li>
+            <li><a href="/gallery.html">Gallery</a></li>
+            <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>
       </div>
@@ -834,161 +828,7 @@
         });
       }
 
-      if (header) {
-        header.addEventListener('click', (e) => {
-          const dropdownBtn = e.target.closest('.has-dd');
-          if (!dropdownBtn) {
-            if (!e.target.closest('.dropdown')) { closeAllDropdowns(); }
-            return;
-          }
-          e.preventDefault();
-          const parentLi = dropdownBtn.closest('li');
-          const wasOpen = parentLi.classList.contains('open');
-
-          const siblings = parentLi.parentElement.querySelectorAll('li.open');
-          siblings.forEach(sib => {
-            if (sib !== parentLi) {
-              sib.classList.remove('open');
-              const btn = sib.querySelector('.has-dd');
-              if (btn) btn.setAttribute('aria-expanded', 'false');
-            }
-          });
-
-          parentLi.classList.toggle('open');
-          dropdownBtn.setAttribute('aria-expanded', !wasOpen);
-        });
-
-        header.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') {
-            closeAllDropdowns();
-            if (burger) burger.focus();
-          }
-        });
-      }
-
-      document.querySelectorAll('.has-dd').forEach(btn => {
-        btn.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-        });
-        const parentLi = btn.closest('li');
-        if (parentLi) {
-          parentLi.addEventListener('focusout', (e) => {
-            if (!parentLi.contains(e.relatedTarget)) {
-              parentLi.classList.remove('open');
-              btn.setAttribute('aria-expanded', 'false');
-            }
-          });
-        }
-      });
-
-      // === ScrollSpy: auto-highlight current section in top nav
-      function setupScrollSpy() {
-        const sections = [
-          { id: '#home', el: document.querySelector('body') },
-          '#hours', '#menu-teaser', '#chalk-wall', '#photo-strip'
-        ].map(s => typeof s === 'string' ? { id: s, el: document.querySelector(s) } : s).filter(s => s.el);
-
-        const links = Array.from(document.querySelectorAll('nav .menu a[href^="#"]'));
-        const setCurrent = (hash) => {
-          links.forEach(a => a.removeAttribute('aria-current'));
-          const active = links.find(a => a.getAttribute('href') === hash);
-          if (active) active.setAttribute('aria-current', 'page');
-        };
-
-        setCurrent('#home');
-
-        const observer = new IntersectionObserver((entries) => {
-          const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (!visible) return;
-          const id = '#' + (visible.target.id || 'home');
-          setCurrent(id);
-        }, { rootMargin: '-40% 0px -50% 0px', threshold: [0.25, 0.5, 0.75] });
-
-        sections.forEach(s => observer.observe(s.el));
-      }
-
-      // === Dropdown keyboard navigation (Arrow keys/Home/End)
-      function enhanceDropdownKeyboardNav(){
-        document.querySelectorAll('nav li').forEach(li=>{
-          const trigger = li.querySelector('.has-dd');
-          const menu = li.querySelector('.dropdown');
-          if(!trigger || !menu) return;
-          const getItems = () => Array.from(menu.querySelectorAll('a,button,[role="menuitem"]'));
-
-          trigger.addEventListener('keydown', (e)=>{
-            if((e.key==='ArrowDown'||e.key==='ArrowUp') && li.classList.contains('open')){
-              e.preventDefault();
-              const items = getItems(); if(!items.length) return;
-              (e.key==='ArrowDown' ? items[0] : items[items.length-1]).focus();
-            }
-          });
-
-          menu.addEventListener('keydown',(e)=>{
-            const items = getItems();
-            const idx = items.indexOf(document.activeElement);
-            if(e.key==='ArrowDown'){ e.preventDefault(); items[(idx+1)%items.length].focus(); }
-            else if(e.key==='ArrowUp'){ e.preventDefault(); items[(idx-1+items.length)%items.length].focus(); }
-            else if(e.key==='Home'){ e.preventDefault(); items[0].focus(); }
-            else if(e.key==='End'){ e.preventDefault(); items[items.length-1].focus(); }
-            else if(e.key==='Escape'){
-              e.preventDefault(); li.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); trigger.focus();
-            }
-          });
-        });
-      }
-
-      // === Open dropdowns on hover (desktop pointer=fine only)
-      function openOnHoverDesktop(){
-        if (window.matchMedia('(pointer:fine)').matches) {
-          document.querySelectorAll('nav li').forEach(li=>{
-            const btn = li.querySelector('.has-dd');
-            const dd = li.querySelector('.dropdown');
-            if(!btn || !dd) return;
-            li.addEventListener('mouseenter', ()=>{ li.classList.add('open'); btn.setAttribute('aria-expanded','true'); });
-            li.addEventListener('mouseleave', ()=>{ li.classList.remove('open'); btn.setAttribute('aria-expanded','false'); });
-          });
-        }
-      }
-
-      // === Populate chalkboard with date + friendly subcopy
-      function populateChalkboard() {
-        const day = new Date().getDay();
-        const weekdayShort = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day];
-        const weekdayLong = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day];
-        const d = new Date();
-        const dateStamp = d.toLocaleDateString(undefined, { month:'short', day:'numeric' });
-
-        const todaysSpecials = specialsByDay[day] || [];
-        const chalkList = document.getElementById('cw-specials');
-        const chalkDayBadge = document.getElementById('cw-day');
-        const chalkSub = document.getElementById('chalk-sub');
-
-        if (chalkList) {
-          chalkList.innerHTML = todaysSpecials.map(item => `
-            <li>
-              <span>${item.title}${item.desc ? ` — <span class="sr-only">Description:</span><em>${item.desc}</em>` : ''}</span>
-              <span class="chalk-price">${item.price || ''}</span>
-            </li>
-          `).join('');
-        }
-
-        if (chalkDayBadge) {
-          chalkDayBadge.textContent = (day === 0 ? 'Closed' : `${weekdayShort} • ${dateStamp}`);
-          if (day === 0) {
-            chalkDayBadge.style.background = '#fff1f1';
-            chalkDayBadge.style.borderColor = '#f1c0c0';
-            chalkDayBadge.style.color = '#7d1a1a';
-          }
-        }
-
-        if (chalkSub) {
-          chalkSub.textContent = (day === 0)
-            ? "Closed on Sundays • Back Monday for lunch!"
-            : `Served after 11am • ${weekdayLong} specials · While they last`;
-        }
-      }
-
-      // Smooth scroll for in-page anchors
+      // Smooth scroll for in-page anchors (hero buttons etc.)
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
@@ -1052,7 +892,7 @@
       function createStickyOrderButton() {
         const stickyOrder = document.createElement('div');
         stickyOrder.className = 'sticky-order';
-        stickyOrder.innerHTML = `<a href="#menu-teaser" class="btn primary"><i class="fa-solid fa-utensils"></i> Order Now</a>`;
+        stickyOrder.innerHTML = `<a href="/menu.html#entrees" class="btn primary"><i class="fa-solid fa-utensils"></i> Order Now</a>`;
         document.body.appendChild(stickyOrder);
       }
 
@@ -1116,6 +956,44 @@
         });
       }
 
+      // Populate chalkboard
+      function populateChalkboard() {
+        const day = new Date().getDay();
+        const weekdayShort = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][day];
+        const weekdayLong = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day];
+        const d = new Date();
+        const dateStamp = d.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+
+        const todaysSpecials = specialsByDay[day] || [];
+        const chalkList = document.getElementById('cw-specials');
+        const chalkDayBadge = document.getElementById('cw-day');
+        const chalkSub = document.getElementById('chalk-sub');
+
+        if (chalkList) {
+          chalkList.innerHTML = todaysSpecials.map(item => `
+            <li>
+              <span>${item.title}${item.desc ? ` — <span class="sr-only">Description:</span><em>${item.desc}</em>` : ''}</span>
+              <span class="chalk-price">${item.price || ''}</span>
+            </li>
+          `).join('');
+        }
+
+        if (chalkDayBadge) {
+          chalkDayBadge.textContent = (day === 0 ? 'Closed' : `${weekdayShort} • ${dateStamp}`);
+          if (day === 0) {
+            chalkDayBadge.style.background = '#fff1f1';
+            chalkDayBadge.style.borderColor = '#f1c0c0';
+            chalkDayBadge.style.color = '#7d1a1a';
+          }
+        }
+
+        if (chalkSub) {
+          chalkSub.textContent = (day === 0)
+            ? "Closed on Sundays • Back Monday for lunch!"
+            : `Served after 11am • ${weekdayLong} specials · While they last`;
+        }
+      }
+
       function init() {
         populateChalkboard();
         addScrollAnimationClasses();
@@ -1125,11 +1003,6 @@
         setupLazyLoading();
         improveKeyboardNav();
         trackUserInteractions();
-
-        // New helpers
-        setupScrollSpy();
-        enhanceDropdownKeyboardNav();
-        openOnHoverDesktop();
 
         if (window.innerWidth > 1024) { setupCardTiltEffect(); }
 
